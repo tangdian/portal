@@ -1,5 +1,6 @@
 class Character extends Obj{
   constructor(x,y){
+    super(options,state);
     this.currY = y;//in pixel;
     this.currX = x;
   }
@@ -37,8 +38,19 @@ class Character extends Obj{
   }
   }
   setInterval(checkCollision() ,20);//check every 20ms
-  function changeState(){
+
+  document.addEventListener("keydown", changeState);
+  function changeState(e){
     //register a event listener
-    //
+    var key = e.keyCode ? e.keyCode : e.which;
+    if (key == 38) {
+      switch(state):
+        case 0:
+          state++;
+          break;
+        case 1:
+          state--;
+          break;
+     }
   }
 }

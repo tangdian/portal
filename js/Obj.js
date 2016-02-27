@@ -1,8 +1,8 @@
 class Obj{
-  constructor(options){
+  constructor(options,state){
     this.GridX = options.X;
     this.GridY = options.Y;
-    this.state;
+    this.state = 0;//0 is a color0, 1 is color1
   }
 
 function update(obj){
