@@ -25,7 +25,7 @@ var games = [new Game({
 	canvas,
 	context: ctx,
 	DIMENSION,
-	speed: 200,
+	speed: 20,
 	plan: ["xxx xxx xxx",
 		"kkk kkk kkk",
 		"xxx xxx kkk",

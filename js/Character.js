@@ -2,7 +2,7 @@ import Obj from './Obj';
 
 class Character extends Obj{
   constructor(state,options){
-    super(state,options);
+    super(options, state);
     this.currY = this.convertPixel(options).y;//in pixel; Y DECREASES
     this.currX = this.convertPixel(options).x;
   }
@@ -17,19 +17,45 @@ class Character extends Obj{
   //   return gridPixel;
   // }
 
- initializeCharacter(ctx){
+ initializeCharacter(ctx,GridX,GridY){
+
+   var imageObj = new Image();
+   imageObj.onload = function() {
+     ctx.drawImage(imageObj, this.GridX * (this.H_DIMENTION / this.H_BLOCKS)-100, this.GridY * (this.V_DIMENTION / this.V_BLOCKS)-600);
+     console.log(GridX * (this.H_DIMENTION / this.H_BLOCKS));
+     console.log(GridY * (this.V_DIMENTION / this.V_BLOCKS));
+   };
+   imageObj.src = "./images/Star2.png";
+
+  
+   
+
+   
+    // ctx.beginPath();
+
+    // ctx.arc(120, 900, 17, 0, Math.PI*2, true);//character size
+    // ctx.fillStyle = "#0095DD";
+    // ctx.fill();
+    // ctx.closePath();
+  }
+
+   draw(ctx) {
+
+     console.log("car currx: " + this.currX);
+     console.log("car curry: " + this.currY);
+
+    this.clear(ctx,this.currX,this.currY);
+    var dy = -1;
+
+
+
+    this.currY += dy;
     ctx.beginPath();
-    ctx.arc(120, 900, 17, 0, Math.PI*2, true);//character size
+    ctx.arc(this.currX, this.currY, 17, 0, Math.PI*2, true);//character size
     ctx.fillStyle = "#0095DD";
     ctx.fill();
     ctx.closePath();
-  }
 
-   draw() {
-    this.clear();
-    var dy = -1;
-    y += dy;
-    
   }
 
   // setInterval(draw ,20);//check every 20ms
@@ -41,7 +67,7 @@ class Character extends Obj{
     // var V_DIMENTION = 960;
     var gridPixel = {
       x: counter.GridX * (this.H_DIMENTION / this.H_BLOCKS),
-      y: (counter.GridY + 1) * (this.V_DIMENTION / this.V_BLOCKS)
+      y: (counter.GridY) * (this.V_DIMENTION / this.V_BLOCKS)
     }
     return gridPixel;
   }
@@ -49,14 +75,15 @@ class Character extends Obj{
 
    checkCollision(portals, enemies, items){
     var collisionType;
+
     //loop through every object in the map
     for(var i = 0; i < portals.length; i++){
       var pixel = convertPixel(portals[i]);//in pixel
       if((this.currY == pixel.y) && (this.currX == pixel.x)){
         this.clear();
-        collsionType = "portal";
-        currX = portal[i+1].GridX;//in grid
-        currY = portal[i+1].GridY;
+        collsionType = "portals";
+        currX = portals[i+1].GridX;//in grid
+        currY = portals[i+1].GridY;
         ctx.beginPath();
         ctx.arc(currX + 9.14, currY, 17, 0, Math.PI*2, true);//portal size
         ctx.fillStyle = "#0095DD";
@@ -102,12 +129,9 @@ class Character extends Obj{
           console.log("Black");
           break;
       }
-        
+
      }
   }
 }
 
 module.exports = Character;
-
-
-

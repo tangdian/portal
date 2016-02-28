@@ -29,12 +29,13 @@ class Game {
 		// // not sure if this can be improved.
 		// // this.universeElem.addEventListener('click', loopCells.bindthis());
 		// // when user click, start the game
-		// document.getElementById('start')
-		// 	.addEventListener('click', this.play.bind(this));
+		document.getElementById('start')
+			.addEventListener('click', this.play.bind(this));
+
 		console.log(this.plan);
 			this.Grid = this.parse(this.plan);
 
-			this.character.initializeCharacter(this.ctx);
+			this.character.initializeCharacter(this.ctx,this.GridX,this.GridY);
 
 			// draw(this.Grid) {
 
@@ -70,25 +71,23 @@ class Game {
 			// 	}
 			// }
 		}
-		
+
 		return grid;
 	}
 
 
 
-	// start the game
-	// play(e){
-	// 	// remove god mode
-	// 	// this.universeElem.removeEventListener('click', loopCells);
-	// 	// game loop
-	// 	setInterval(this.character.update(), this.speed);
-	// 	for (var i = 0; i < enemies.length;i++) {
-	// 		setInterval(this.character.update(), this.speed);
 
-	// 	}
-	// 	setInterval(this.character.update(), this.speed);
+	play(e){
+		// remove god mode
+		// this.universeElem.removeEventListener('click', loopCells);
+		// game loop
+		// console.log(this.speed);
+		setInterval(this.character.draw(this.ctx), this.speed);
+		// setInterval(this.character.checkCollision(this.portals,this.enemies,this.items), this.speed);
+		document.addEventListener("keydown", this.character.changeState)
 
-	// }
+	}
 
 	// draw grid
 	drawGrid() {
