@@ -379,8 +379,16 @@ var Game = (function () {
 	}, {
 		key: 'draw',
 		value: function draw() {
+<<<<<<< HEAD
 			//draw static stuff	
 			// console.log(this.Grid);
+||||||| merged common ancestors
+			//draw static stuff	
+			console.log(this.Grid);
+=======
+			//draw static stuff
+			console.log(this.Grid);
+>>>>>>> 3bfb63ca467c6606d6867b401582ef9b2f51fc58
 
 			for (var i = 0; i < this.stillE.length; i++) {
 
@@ -515,7 +523,7 @@ function loopCells(e) {
 function step() {}
 
 /*
-*	pass the cell through the 4 rules. 
+*	pass the cell through the 4 rules.
 	Note: cells should not update here, since altering 1 before you can
 	analyze the others will cause erroneous outcomes.
 */
