@@ -1,21 +1,42 @@
 class Character extends Obj{
-  constructor(x,y){
-    super(options,state);
-    this.currY = y;//in pixel;
-    this.currX = x;
+  constructor(state,options){
+    super(state,options);
+    this.currY = convertPixel(options).y;//in pixel; Y DECREASES
+    this.currX = convertPixel(options).x;
   }
-  
+
+  function convertOptionsToPixel(options){
+    var H_BLOCKS = 14;
+    var H_DIMENTION = 256;
+    var V_BLOCKS = 25;
+    var V_DIMENTION = 960;
+    var gridPixel.x = options.x * (H_DIMENTION / H_BLOCKS);
+    var gridPixel.y = (options.y+1) * (V_DIMENTION / V_BLOCKS);
+    return gridPixel;
+  }
+  function convertPixel(counter){
+    var H_BLOCKS = 14;
+    var H_DIMENTION = 256;
+    var V_BLOCKS = 25;
+    var V_DIMENTION = 960;
+    var gridPixel.x = counter.GridX * (H_DIMENTION / H_BLOCKS);
+    var gridPixel.y = (counter.GridY+1) * (V_DIMENTION / V_BLOCKS);
+    return gridPixel;
+  }
+
+
   function checkCollision(){
     var collisionType;
     //loop through every object in the map
     for(var i = 0; i < portal.length; i++){
-      if((this.currY == i.GridY) && (this.currX == i.GridX){
-        collsionType = "portal";
-        newX = portal[i+1].GridX;
-        newY = portal[i+1].GridY + 38.4;
+      var pixel = convertPixel(portal[i]);//in pixel
+      if((this.currY == pixel.y) && (this.currX == pixel.x){
         update();
+        collsionType = "portal";
+        currX = portal[i+1].GridX;//in grid
+        currY = portal[i+1].GridY;
         ctx.beginPath();
-        ctx.rect(newX, newY, 54.857, 38.5);
+        // ctx.rect(newX, newY, 54.857, 38.5);
         ctx.arc(newX + 9.14, newY, 17, 0, Math.PI*2, true);
         ctx.fillStyle = "#0095DD";
         ctx.fill();
@@ -24,14 +45,14 @@ class Character extends Obj{
     }
 
     for(var i = 0; i < enemy.length; i++){
-      // if(this.currY > i.GridY && this.currY < i.GridY - 38.4 && (currX > i.GridX && currX < i.Gridx + 18.28){
-      if((this.currY == i.GridY) && (this.currX == i.GridX){
+      // if(this.currY > i.y && this.currY < i.y - 38.4 && (currX > i.x && currX < i.x + 18.28){
+      if((this.currY == pixel.y) && (this.currX == pixel.x){
         collsionType = "enemy";
         document.reload();
       }
     }
     for(var i = 0; i < item.length; i++){
-      if((this.currY == i.GridY) && (this.currX == i.GridX){
+      if((this.currY == pixel.y) && (this.currX == pixel.x){
         collsionType = "item";
         itemCollected ++;
       }
