@@ -1,5 +1,5 @@
 class Portals extends Obj{
-  constructor(){
-
+  constructor(state, options){
+    super(state, options);
   }
 }

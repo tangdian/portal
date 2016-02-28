@@ -28,7 +28,12 @@ class Character extends Obj{
    draw() {
     this.clear();
     var dy = -1;
-    y += dy;
+    currY += dy;
+    ctx.beginPath();
+    ctx.arc(currX, currY, 17, 0, Math.PI*2, true);//character size
+    ctx.fillStyle = "#0095DD";
+    ctx.fill();
+    ctx.closePath();
   }
 
   // setInterval(draw ,20);//check every 20ms
@@ -53,9 +58,9 @@ class Character extends Obj{
       var pixel = convertPixel(portals[i]);//in pixel
       if((this.currY == pixel.y) && (this.currX == pixel.x)){
         this.clear();
-        collsionType = "portal";
-        currX = portal[i+1].GridX;//in grid
-        currY = portal[i+1].GridY;
+        collsionType = "portals";
+        currX = portals[i+1].GridX;//in grid
+        currY = portals[i+1].GridY;
         ctx.beginPath();
         ctx.arc(currX + 9.14, currY, 17, 0, Math.PI*2, true);//portal size
         ctx.fillStyle = "#0095DD";
