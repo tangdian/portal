@@ -39,11 +39,6 @@ class Character extends Obj{
      imageObj.src = "./images/Star2.png";
    }, 50);
   
-  
-
-  
-   
-
    
     // ctx.beginPath();
 

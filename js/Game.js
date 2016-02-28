@@ -52,6 +52,8 @@ class Game {
 			// }
 	}
 
+	
+
 	parse(plan) {
 		// let grid = [];
 
@@ -170,7 +172,7 @@ class Game {
 		// //loop through every object in the map
 		// for(var i = 0; i < portals.length; i++){
 		//   var pixel = convertPixel(portals[i]);//in pixel
-		//   if((this.currY == pixel.y) && (this.currX == pixel.x)){
+		//   if((this.currY == pixel.y) && (this.currX == pixel.x) && (this.portals[i].state==this.character.state)){
 		//     this.clear();
 		//     collsionType = "portals";
 		//     currX = portals[i+1].GridX;//in grid
