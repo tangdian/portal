@@ -5,15 +5,16 @@ class Character extends Obj{
     this.currX = convertPixel(options).x;
   }
 
-  function convertOptionsToPixel(options){
-    var H_BLOCKS = 14;
-    var H_DIMENTION = 256;
-    var V_BLOCKS = 25;
-    var V_DIMENTION = 960;
-    var gridPixel.x = options.x * (H_DIMENTION / H_BLOCKS);
-    var gridPixel.y = (options.y+1) * (V_DIMENTION / V_BLOCKS);
-    return gridPixel;
-  }
+  // function convertOptionsToPixel(options){
+  //   var H_BLOCKS = 14;
+  //   var H_DIMENTION = 256;
+  //   var V_BLOCKS = 25;
+  //   var V_DIMENTION = 960;
+  //   var gridPixel.x = options.x * (H_DIMENTION / H_BLOCKS);
+  //   var gridPixel.y = (options.y+1) * (V_DIMENTION / V_BLOCKS);
+  //   return gridPixel;
+  // }
+
   function convertPixel(counter){
     var H_BLOCKS = 14;
     var H_DIMENTION = 256;
@@ -44,24 +45,29 @@ class Character extends Obj{
       }
     }
 
-    for(var i = 0; i < enemy.length; i++){
+    for(var i = 0; i < enemies.length; i++){
+      var pixel = convertPixel(enemies[i]);//in pixel
       // if(this.currY > i.y && this.currY < i.y - 38.4 && (currX > i.x && currX < i.x + 18.28){
       if((this.currY == pixel.y) && (this.currX == pixel.x){
-        collsionType = "enemy";
+        collsionType = "enemies";
         document.reload();
       }
     }
-    for(var i = 0; i < item.length; i++){
+    for(var i = 0; i < items.length; i++){
+      var pixel = convertPixel(items[i]);//in pixel
       if((this.currY == pixel.y) && (this.currX == pixel.x){
-        collsionType = "item";
+        collsionType = "items";
         itemCollected ++;
       }
     }
   }
-  }
-  setInterval(checkCollision() ,20);//check every 20ms
+  
 
+
+  setInterval(checkCollision() ,20);//check every 20ms
   document.addEventListener("keydown", changeState);
+  
+
   function changeState(e){
     //register a event listener
     var key = e.keyCode ? e.keyCode : e.which;
