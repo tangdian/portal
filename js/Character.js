@@ -29,6 +29,7 @@ class Character extends Obj{
     this.clear();
     var dy = -1;
     y += dy;
+    
   }
 
   // setInterval(draw ,20);//check every 20ms
