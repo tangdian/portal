@@ -4,7 +4,7 @@ class Character extends Obj{
   constructor(state,options){
     super(options);
     this.state = state;
-    this.currY = this.convertPixel(options).y;//in pixel; Y DECREASES
+    this.currY = this.convertPixel(options).y;//in pixel;
     this.currX = this.convertPixel(options).x;
   }
 
@@ -24,16 +24,12 @@ class Character extends Obj{
    var y = this.currY;
    var imageObj = new Image();
    imageObj.onload = function() {
-   
+
      ctx.drawImage(imageObj, x,y);
-    
-   }; 
+
+   };
    imageObj.src = "./images/Star2.png";
 
-  
-   
-
-   
     // ctx.beginPath();
 
     // ctx.arc(120, 900, 17, 0, Math.PI*2, true);//character size
@@ -49,9 +45,8 @@ class Character extends Obj{
    draw(ctx) {
      console.log("drawing..");
 
-    
     this.clear(ctx,this.currX,this.currY);
-    
+
     var dy = -1;
     this.currY += dy;
 
@@ -81,14 +76,13 @@ class Character extends Obj{
     return gridPixel;
   }
 
-
    checkCollision(portals, enemies, items, grid){
     var collisionType;
 
     //loop through every object in the map
     for(var i = 0; i < portals.length; i++){
       var pixel = convertPixel(portals[i]);//in pixel
-      if((this.currY == pixel.y) && (this.currX == pixel.x)){
+      if((this.currY == pixel.y) && (this.currX == pixel.x) && (portals[i].state == this.state)){
         this.clear();
         collsionType = "portals";
         currX = portals[i+1].GridX;//in grid
@@ -141,7 +135,6 @@ class Character extends Obj{
 
   // setInterval(checkCollision ,20);//check every 20ms
   // document.addEventListener("keydown", changeState);
-
 
    changeState(e){
     //register a event listener
