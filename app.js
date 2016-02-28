@@ -8,7 +8,7 @@ const UNIVERSE_LENGTH = 13;
 const UNIVERSE_HEIGHT = 25;
 
 const DIMENSION = {
-	
+
 	UNIVERSE_LENGTH: 13,
 	UNIVERSE_HEIGHT:25,
 	CELL_LENGTH: 256/UNIVERSE_LENGTH,
@@ -404,6 +404,3 @@ function chooseGame(num) {
 
 
 chooseGame(10);
-
-
-
