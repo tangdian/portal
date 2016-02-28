@@ -15,6 +15,20 @@ class Character extends Obj{
   //   return gridPixel;
   // }
 
+
+  function drawCharacter() {
+    var dy = -1;
+    /*need to clear*/
+    ctx.beginPath();
+    ctx.arc(x, y, 17, 0, Math.PI*2, true);//character size
+    ctx.fillStyle = "#0095DD";
+    ctx.fill();
+    ctx.closePath();
+    y += dy;
+  }
+
+  setInterval(drawCharacter ,20);//check every 20ms
+
   function convertPixel(counter){
     var H_BLOCKS = 14;
     var H_DIMENTION = 256;
@@ -38,7 +52,7 @@ class Character extends Obj{
         currY = portal[i+1].GridY;
         ctx.beginPath();
         // ctx.rect(newX, newY, 54.857, 38.5);
-        ctx.arc(newX + 9.14, newY, 17, 0, Math.PI*2, true);
+        ctx.arc(newX + 9.14, newY, 17, 0, Math.PI*2, true);//portal size
         ctx.fillStyle = "#0095DD";
         ctx.fill();
         ctx.closePath();
@@ -61,12 +75,10 @@ class Character extends Obj{
       }
     }
   }
-  
 
-
-  setInterval(checkCollision() ,20);//check every 20ms
+  setInterval(checkCollision ,20);//check every 20ms
   document.addEventListener("keydown", changeState);
-  
+
 
   function changeState(e){
     //register a event listener

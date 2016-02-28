@@ -6,6 +6,6 @@ class Obj{
   }
 
 function update(obj){
-  ctx.clearRect(obj.x, obj.y, canvas.width, canvas.height);
+  ctx.clearRect(this.x, this.y, canvas.width, canvas.height);
 }
 }
