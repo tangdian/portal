@@ -1,8 +1,10 @@
+import Obj from './Obj';
+
 class Character extends Obj{
   constructor(state,options){
     super(state,options);
-    this.currY = convertPixel(options).y;//in pixel; Y DECREASES
-    this.currX = convertPixel(options).x;
+    this.currY = this.convertPixel(options).y;//in pixel; Y DECREASES
+    this.currX = this.convertPixel(options).x;
   }
 
   // function convertOptionsToPixel(options){
@@ -15,7 +17,7 @@ class Character extends Obj{
   //   return gridPixel;
   // }
 
- initializeCharacter(){
+ initializeCharacter(ctx){
     ctx.beginPath();
     ctx.arc(120, 900, 17, 0, Math.PI*2, true);//character size
     ctx.fillStyle = "#0095DD";
@@ -32,13 +34,13 @@ class Character extends Obj{
   // setInterval(draw ,20);//check every 20ms
 
    convertPixel(counter){
-    var H_BLOCKS = 14;
-    var H_DIMENTION = 256;
-    var V_BLOCKS = 25;
-    var V_DIMENTION = 960;
+    // var H_BLOCKS = 14;
+    // var H_DIMENTION = 256;
+    // var V_BLOCKS = 25;
+    // var V_DIMENTION = 960;
     var gridPixel = {
-      x: counter.GridX * (H_DIMENTION / H_BLOCKS),
-      y: (counter.GridY + 1) * (V_DIMENTION / V_BLOCKS)
+      x: counter.GridX * (this.H_DIMENTION / this.H_BLOCKS),
+      y: (counter.GridY + 1) * (this.V_DIMENTION / this.V_BLOCKS)
     }
     return gridPixel;
   }

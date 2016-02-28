@@ -18,21 +18,23 @@ class Game {
 		this.portals = [];
 		this.items = [];
 		this.enemies = [];
-		this.character = new Character();
+		this.character = new Character(0,{GridX:6,GridY:24});
 		this.point = 0;
 		this.win = false;
 	}
 
 	// initial set up
 	iniSetUp() {
-		// Note: using bind to pass the class' context to the callbacks
-		// not sure if this can be improved.
-		// this.universeElem.addEventListener('click', loopCells.bindthis());
-		// when user click, start the game
-		document.getElementById('start')
-			.addEventListener('click', this.play.bind(this));
-
+		// // Note: using bind to pass the class' context to the callbacks
+		// // not sure if this can be improved.
+		// // this.universeElem.addEventListener('click', loopCells.bindthis());
+		// // when user click, start the game
+		// document.getElementById('start')
+		// 	.addEventListener('click', this.play.bind(this));
+		console.log(this.plan);
 			this.Grid = this.parse(this.plan);
+
+			this.character.initializeCharacter(this.ctx);
 
 			// draw(this.Grid) {
 
@@ -46,46 +48,47 @@ class Game {
 			let array = plan[i].split(" ");
 		
 			grid.push(array);
-			for(var j=0;i<array.length;i++) {
-				if(array[j] == "itm") {
-					this.items.push()
-					array[j] = "kkk";
+			// for(var j=0;i<array.length;i++) {
+			// 	if(array[j] == "itm") {
+			// 		this.items.push()
+			// 		array[j] = "kkk";
 
-				}
-				else if(array[j] == "moe") {
-					this.Enemies.push(new Enemy(i,j,))
-					array[j] = "kkk";
+			// 	}
+			// 	else if(array[j] == "moe") {
+			// 		this.Enemies.push(new Enemy(i,j,))
+			// 		array[j] = "kkk";
 
-				}
-				else if(array[j] == "ptW") {
-					this.portals.push(new Portal(i,j,1));
-					array[j] = "kkk";
-				}
+			// 	}
+			// 	else if(array[j] == "ptW") {
+			// 		this.portals.push(new Portal(i,j,1));
+			// 		array[j] = "kkk";
+			// 	}
 
-				else if(array[j] == "ptB") {
-					this.portals.push(new Portal(i,j,0));
-					array[j] = "kkk";
-				}
-			}
+			// 	else if(array[j] == "ptB") {
+			// 		this.portals.push(new Portal(i,j,0));
+			// 		array[j] = "kkk";
+			// 	}
+			// }
 		}
+		
 		return grid;
 	}
 
 
 
 	// start the game
-	play(e){
-		// remove god mode
-		this.universeElem.removeEventListener('click', loopCells);
-		// game loop
-		setInterval(this.character.update(), this.speed);
-		for (var i = 0; i < enemies.length;i++) {
-			setInterval(this.character.update(), this.speed);
+	// play(e){
+	// 	// remove god mode
+	// 	// this.universeElem.removeEventListener('click', loopCells);
+	// 	// game loop
+	// 	setInterval(this.character.update(), this.speed);
+	// 	for (var i = 0; i < enemies.length;i++) {
+	// 		setInterval(this.character.update(), this.speed);
 
-		}
-		setInterval(this.character.update(), this.speed);
+	// 	}
+	// 	setInterval(this.character.update(), this.speed);
 
-	}
+	// }
 
 	// draw grid
 	drawGrid() {
@@ -111,7 +114,7 @@ class Game {
 
 	draw() {
 		//draw static stuff	
-		
+		console.log(this.Grid);
 
 		for(var i=0;i<this.Grid.length;i++) {
 
@@ -119,8 +122,8 @@ class Game {
 				let elem = this.Grid[i][j];
 						console.log(elem);
 				if (elem == "xxx") {
-					console.log(i);
 					console.log(j);
+					console.log(i);
 					this.ctx.fillRect((1+3*j+j)*this.DIMENSION.CELL_LENGTH,i*this.DIMENSION.CELL_HEIGHT,3*this.DIMENSION.CELL_LENGTH,this.DIMENSION.CELL_HEIGHT);
 				}
 			}
@@ -128,20 +131,20 @@ class Game {
 
 
 
-		for (var i=0;i<this.portals.length;i++) {
-			ctx.fillStyle="#FF0000";
-			this.ctx.fillRect(i*CELL_LENGTH,i*CELL_HEIGHT,3*CELL_LENGTH,CELL_HEIGHT);
-		}
+		// for (var i=0;i<this.portals.length;i++) {
+		// 	ctx.fillStyle="#FF0000";
+		// 	this.ctx.fillRect(i*CELL_LENGTH,i*CELL_HEIGHT,3*CELL_LENGTH,CELL_HEIGHT);
+		// }
 
-		for (var i=0;i<this.portals.length;i++) {
-			ctx.fillStyle="blue";
-			this.ctx.fillRect(i*CELL_LENGTH,i*CELL_HEIGHT,3*CELL_LENGTH,CELL_HEIGHT);
-		}
+		// for (var i=0;i<this.portals.length;i++) {
+		// 	ctx.fillStyle="blue";
+		// 	this.ctx.fillRect(i*CELL_LENGTH,i*CELL_HEIGHT,3*CELL_LENGTH,CELL_HEIGHT);
+		// }
 
-		for (var i=0;i<this.portals.length;i++) {
-			ctx.fillStyle="yellow";
-			this.ctx.fillRect(i*CELL_LENGTH,i*CELL_HEIGHT,3*CELL_LENGTH,CELL_HEIGHT);
-		}
+		// for (var i=0;i<this.portals.length;i++) {
+		// 	ctx.fillStyle="yellow";
+		// 	this.ctx.fillRect(i*CELL_LENGTH,i*CELL_HEIGHT,3*CELL_LENGTH,CELL_HEIGHT);
+		// }
 
 
 }

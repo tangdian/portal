@@ -15,9 +15,13 @@ class Obj{
 }
 
 
-  function convertPixel(counter) {
-    var gridPixel.x = counter.GridX * (this.H_DIMENTION / this.H_BLOCKS);
-    var gridPixel.y = (counter.GridY + 1) * (this.V_DIMENTION / this.V_BLOCKS);
+  convertPixel(counter) {
+	  var gridPixel = {
+		  x: counter.GridX * (this.H_DIMENTION / this.H_BLOCKS),
+		  y: (counter.GridY + 1) * (this.V_DIMENTION / this.V_BLOCKS)
+	  }
     return gridPixel;
 	}
 }
+
+module.exports = Obj;
