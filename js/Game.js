@@ -1,4 +1,4 @@
-// import Character from ./Character.js;
+import Character from ./Character.js;
 // import Portal from ./Character.js;
 // import Item from ./Character.js;
 // import Enemy from ./Character.js;

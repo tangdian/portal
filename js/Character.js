@@ -4,6 +4,7 @@ class Character extends Obj{
     this.currY = y;//in pixel;
     this.currX = x;
   }
+  
   function checkCollision(){
     var collisionType;
     //loop through every object in the map
