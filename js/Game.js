@@ -17,7 +17,8 @@ class Game {
 		this.Grid = [];
 		this.portalsB = [];
 		this.portalsW = [];
-		this.items = [];
+		this.itrs = [];
+		this.itss = [];
 		this.movingE = [];
 		this.stillE = [];
 		this.character = new Character(0,{GridX:5,GridY:23});
@@ -87,6 +88,14 @@ class Game {
 				else if(array[j] == "ptB") {
 					this.portalsB.push(new Portal (0, { GridX: 1+3*j+j, GridY:i}));
 				}
+				else if (array[j] == "itr") {
+					this.itrs.push(new Obj({ GridX: 1 + 3 * j + j, GridY: i }));
+				}
+				else if (array[j] == "its") {
+					this.itss.push(new Obj({ GridX: 1 + 3 * j + j, GridY: i }));
+				}
+
+			
 			}
 		
 		}
@@ -170,7 +179,7 @@ class Game {
 		for (var i = 0; i < this.portalsB.length; i++) {
 			let x = this.portalsB[i].GridX;
 			let y = this.portalsB[i].GridY;
-			if (this.portalsB[i].state == 0) {
+			
 				var imageObj = new Image();
 				imageObj.onload = function() {
 
@@ -178,14 +187,14 @@ class Game {
 
 				};
 				imageObj.src = "./images/potB.png";
-			}
+		
 		}
 
 
 			for (var i = 0; i < this.portalsW.length; i++) {
 				let x = this.portalsW[i].GridX;
 				let y = this.portalsW[i].GridY;
-				if (this.portalsW[i].state == 0) {
+			
 					var imageObj = new Image();
 					imageObj.onload = function() {
 
@@ -193,10 +202,58 @@ class Game {
 
 					};
 					imageObj.src = "./images/potW.png";
-				}
+				
 
 
 			}
+
+			for (var i = 0; i < this.itss.length; i++) {
+				let x = this.itss[i].GridX;
+				let y = this.itss[i].GridY;
+
+				var imageObj = new Image();
+				imageObj.onload = function() {
+
+					ctx.drawImage(this, x * xshift, y * yshift);
+
+				};
+				imageObj.src = "./images/Star2.png";
+
+
+
+			}
+
+			for (var i = 0; i < this.itrs.length; i++) {
+				let x = this.itrs[i].GridX;
+				let y = this.itrs[i].GridY;
+
+				var imageObj = new Image();
+				imageObj.onload = function() {
+
+					ctx.drawImage(this, x * xshift, y * yshift);
+
+				};
+				imageObj.src = "./images/reverse.png";
+
+
+
+			}
+
+			// for (var i = 0; i < this.items.length; i++) {
+			// 	let x = this.portalsW[i].GridX;
+			// 	let y = this.portalsW[i].GridY;
+
+			// 	var imageObj = new Image();
+			// 	imageObj.onload = function() {
+
+			// 		ctx.drawImage(this, x * xshift, y * yshift);
+
+			// 	};
+			// 	imageObj.src = "./images/potW.png";
+
+
+
+			// }
 
 		}
 	
