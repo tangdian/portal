@@ -1,5 +1,5 @@
 import Character from './Character';
-// import Portal from ./Character.js;
+import Obj from './Obj';
 // import Item from ./Character.js;
 // import Enemy from ./Character.js;
 
@@ -22,6 +22,12 @@ class Game {
 		this.character = new Character(0,{GridX:5,GridY:24});
 		this.point = 0;
 		this.win = false;
+		this.H_BLOCKS = 13;
+		this.H_DIMENTION = 256;
+		this.V_BLOCKS = 25;
+		this.V_DIMENTION = 960;
+		this.intervalID = 0;
+
 	}
 
 	// initial set up
@@ -36,8 +42,8 @@ class Game {
 				self.play();
 			});
 
-		console.log(this.plan);
-			this.Grid = this.parse(this.plan);
+			console.log(this.plan);
+			this.parse(this.plan);
 
 			this.character.initializeCharacter(this.ctx,this.character.GridX,this.character.GridY);
 
@@ -47,36 +53,35 @@ class Game {
 	}
 
 	parse(plan) {
-		let grid = [];
+		// let grid = [];
 
 		for(var i=0;i<plan.length;i++) {
 			let array = plan[i].split(" ");
+
+	
+			for(var j=0;j<array.length;j++) {
+				if(array[j] == "xxx") {
+					this.stillE.push(new Obj({ GridX: j, GridY: i }));
+					
+
+				}
+				
+				else if(array[j] == "moe") {
+					this.Enemies.push(new movingE({}));
+
+				}
+				else if(array[j] == "ptW") {
+					this.portals.push(new Portal(1, { GrixX: j, GridY:i}));
+				}
+
+				else if(array[j] == "ptB") {
+					this.portals.push(new Portal(0, { GridX: j, GridY:i}));
+				}
+			}
 		
-			grid.push(array);
-			// for(var j=0;i<array.length;i++) {
-			// 	if(array[j] == "itm") {
-			// 		this.items.push()
-			// 		array[j] = "kkk";
-
-			// 	}
-			// 	else if(array[j] == "moe") {
-			// 		this.Enemies.push(new Enemy(i,j,))
-			// 		array[j] = "kkk";
-
-			// 	}
-			// 	else if(array[j] == "ptW") {
-			// 		this.portals.push(new Portal(i,j,1));
-			// 		array[j] = "kkk";
-			// 	}
-
-			// 	else if(array[j] == "ptB") {
-			// 		this.portals.push(new Portal(i,j,0));
-			// 		array[j] = "kkk";
-			// 	}
-			// }
 		}
 
-		return grid;
+		// return grid;
 	}
 
 
@@ -90,9 +95,9 @@ class Game {
 
 		var self = this;
 
-		setInterval(function() {
+		this.intervalID = setInterval(function() {
 			self.character.draw(self.ctx);
-			self.character.checkCollision(self.protals, self.enemies, self.items);
+			self.checkCollision();
 		}, 20);
 	
 		// setInterval(this.character.checkCollision(this.portals,this.enemies,this.items), this.speed);
@@ -128,18 +133,17 @@ class Game {
 
 	draw() {
 		//draw static stuff	
-		console.log(this.Grid);
+		// console.log(this.Grid);
 
-		for(var i=0;i<this.Grid.length;i++) {
+		for(var i=0;i<this.stillE.length;i++) {
 
-			for(var j=0;j<this.Grid[i].length;j++) {
-				let elem = this.Grid[i][j];
-						console.log(elem);
-				if (elem == "xxx") {
-					console.log(j);
-					console.log(i);
-					this.ctx.fillRect((1+3*j+j)*this.DIMENSION.CELL_LENGTH,i*this.DIMENSION.CELL_HEIGHT,3*this.DIMENSION.CELL_LENGTH,this.DIMENSION.CELL_HEIGHT);
-				}
+			let x = this.stillE[i].GridX;
+			let y = this.stillE[i].GridY;
+			console.log("x of obj is" + x);
+			console.log("y of obj is" + y);
+
+			this.ctx.fillRect((1+3*x+x)*this.DIMENSION.CELL_LENGTH,y*this.DIMENSION.CELL_HEIGHT,3*this.DIMENSION.CELL_LENGTH,this.DIMENSION.CELL_HEIGHT);
+
 			}
 		}
 
@@ -160,10 +164,84 @@ class Game {
 		// 	this.ctx.fillRect(i*CELL_LENGTH,i*CELL_HEIGHT,3*CELL_LENGTH,CELL_HEIGHT);
 		// }
 
+	checkCollision() {
+		// var collisionType;
+
+		// //loop through every object in the map
+		// for(var i = 0; i < portals.length; i++){
+		//   var pixel = convertPixel(portals[i]);//in pixel
+		//   if((this.currY == pixel.y) && (this.currX == pixel.x)){
+		//     this.clear();
+		//     collsionType = "portals";
+		//     currX = portals[i+1].GridX;//in grid
+		//     currY = portals[i+1].GridY;
+		//     var imageObj = new Image();
+		//     imageObj.onload = function() {
+
+		//       ctx.drawImage(imageObj, x, y);
+
+		//     };
+		//     imageObj.src = "./images/Star2.png";
+
+
+		//     // ctx.beginPath();
+		//     // ctx.arc(currX + 9.14, currY, 17, 0, Math.PI*2, true);//portal size
+		//     // ctx.fillStyle = "#0095DD";
+		//     // ctx.fill();
+		//     // ctx.closePath();
+		//   }
+		// }
+
+		for (var i = 0; i < this.stillE.length; i++) {
+			var pixel = convertPixel(this.stillE[i]);//in pixel
+			// console.log(pixel.y);
+			// if(this.currY > i.y && this.currY < i.y - 38.4 && (currX > i.x && currX < i.x + 18.28){
+			if (this.character.currY < pixel.y) {
+				// collsionType = "stillE";
+				clearInterval(this.intervalID);
+				this.iniSetUp();
+				console.log("i am executed");
+				return;
+			}
+		}
+
+		for (var i = 0; i < this.movingE.length; i++) {
+			var pixel = convertPixel(this.movingE[i]);//in pixel
+			// if(this.currY > i.y && this.currY < i.y - 38.4 && (currX > i.x && currX < i.x + 18.28){
+			if ((this.character.currY < pixel.y) && (this.currX == pixel.x)) {
+				document.reload();
+
+			}
+		}
+
+
+		for (var i = 0; i < this.items.length; i++) {
+			var pixel = convertPixel(this.items[i]);//in pixel
+			if ((this.currY < pixel.y) && (this.currX == pixel.x)) {
+				this.point++;
+				console.log(this.point);
+			}
+		}
+	}
+
 
 }
 
+
+
+
+function convertPixel(counter){
+    var H_BLOCKS = 13;
+    var H_DIMENTION = 256;
+    var V_BLOCKS = 25;
+    var V_DIMENTION = 960;
+    var gridPixel = {
+		x: counter.GridX * (H_DIMENTION / H_BLOCKS),
+		y: (counter.GridY) * (V_DIMENTION / V_BLOCKS)
+    }
+    return gridPixel;
 }
+
 
 // Private methods
 // --------------------

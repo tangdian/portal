@@ -32,6 +32,18 @@ var games = [new Game({
 		"kkk kkk kkk",
 		"kkk xxx xxx",
 		"kkk kkk kkk",
+		"kkk xxx kkk",
+		"kkk kkk kkk",
+		"xxx xxx kkk",
+		"kkk kkk kkk",
+		"kkk xxx xxx",
+		"kkk kkk kkk",
+		"kkk xxx kkk",
+		"kkk kkk kkk",
+		"xxx xxx kkk",
+		"kkk kkk kkk",
+		"kkk xxx xxx",
+		"kkk kkk kkk",
 		"kkk xxx kkk"]
 }), ];
 

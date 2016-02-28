@@ -28,9 +28,10 @@ class Obj{
 		 // // console.log(this.GridX);
 		 // var x = this.GridX * (this.H_DIMENTION / this.H_BLOCKS);
 		 // var y = (this.GridY) * (this.V_DIMENTION / this.V_BLOCKS);
-		 // console.log("x is "+ x);
-		 // console.log("y is " + y);
-	  ctx.clearRect(x,y, 3 * (this.H_DIMENTION / this.H_BLOCKS), this.V_DIMENTION / this.V_BLOCKS);
+		 console.log("x is "+ x);
+		 console.log("y is " + y);
+
+	  ctx.clearRect(x,y, 3 * (this.H_DIMENTION / this.H_BLOCKS), 1+(this.V_DIMENTION / this.V_BLOCKS));
   }
 }
 
