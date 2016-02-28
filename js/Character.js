@@ -101,12 +101,9 @@ class Character extends Obj{
           console.log("Black");
           break;
       }
-        
+
      }
   }
 }
 
 module.exports = Character;
-
-
-
