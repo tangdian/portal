@@ -1,3 +1,10 @@
+// import Character from ./Character.js;
+// import Portal from ./Character.js;
+// import Item from ./Character.js;
+// import Enemy from ./Character.js;
+
+
+
 class Game {
 	// set up instance variables
 	constructor(options){
@@ -6,7 +13,16 @@ class Game {
 		this.DIMENSION = options.DIMENSION;
 		this.universeElem = document.getElementById('universe');
 		this.speed = options.speed;
+		this.plan = options.plan;
+		this.Grid = [];
+		this.portals = [];
+		this.items = [];
+		this.enemies = [];
+		this.character = new Character();
+		this.point = 0;
+		this.win = false;
 	}
+
 	// initial set up
 	iniSetUp() {
 		// Note: using bind to pass the class' context to the callbacks
@@ -15,14 +31,62 @@ class Game {
 		// when user click, start the game
 		document.getElementById('start')
 			.addEventListener('click', this.play.bind(this));
+
+			this.Grid = this.parse(this.plan);
+
+			// draw(this.Grid) {
+
+			// }
 	}
+
+	parse(plan) {
+		let grid = [];
+
+		for(var i=0;i<plan.length;i++) {
+			let array = plan[i].split(" ");
+		
+			grid.push(array);
+			for(var j=0;i<array.length;i++) {
+				if(array[j] == "itm") {
+					this.items.push()
+					array[j] = "kkk";
+
+				}
+				else if(array[j] == "moe") {
+					this.Enemies.push(new Enemy(i,j,))
+					array[j] = "kkk";
+
+				}
+				else if(array[j] == "ptW") {
+					this.portals.push(new Portal(i,j,1));
+					array[j] = "kkk";
+				}
+
+				else if(array[j] == "ptB") {
+					this.portals.push(new Portal(i,j,0));
+					array[j] = "kkk";
+				}
+			}
+		}
+		return grid;
+	}
+
+
+
 	// start the game
 	play(e){
 		// remove god mode
 		this.universeElem.removeEventListener('click', loopCells);
 		// game loop
-		setInterval(step.bind(this), this.speed);
+		setInterval(this.character.update(), this.speed);
+		for (var i = 0; i < enemies.length;i++) {
+			setInterval(this.character.update(), this.speed);
+
+		}
+		setInterval(this.character.update(), this.speed);
+
 	}
+
 	// draw grid
 	drawGrid() {
 		this.ctx.strokeStyle = '#777';
@@ -44,6 +108,44 @@ class Game {
 			this.ctx.stroke();
 		}
 	}
+
+	draw() {
+		//draw static stuff	
+		
+
+		for(var i=0;i<this.Grid.length;i++) {
+
+			for(var j=0;j<this.Grid[i].length;j++) {
+				let elem = this.Grid[i][j];
+						console.log(elem);
+				if (elem == "xxx") {
+					console.log(i);
+					console.log(j);
+					this.ctx.fillRect((1+3*j+j)*this.DIMENSION.CELL_LENGTH,i*this.DIMENSION.CELL_HEIGHT,3*this.DIMENSION.CELL_LENGTH,this.DIMENSION.CELL_HEIGHT);
+				}
+			}
+		}
+
+
+
+		for (var i=0;i<this.portals.length;i++) {
+			ctx.fillStyle="#FF0000";
+			this.ctx.fillRect(i*CELL_LENGTH,i*CELL_HEIGHT,3*CELL_LENGTH,CELL_HEIGHT);
+		}
+
+		for (var i=0;i<this.portals.length;i++) {
+			ctx.fillStyle="blue";
+			this.ctx.fillRect(i*CELL_LENGTH,i*CELL_HEIGHT,3*CELL_LENGTH,CELL_HEIGHT);
+		}
+
+		for (var i=0;i<this.portals.length;i++) {
+			ctx.fillStyle="yellow";
+			this.ctx.fillRect(i*CELL_LENGTH,i*CELL_HEIGHT,3*CELL_LENGTH,CELL_HEIGHT);
+		}
+
+
+}
+
 }
 
 // Private methods
@@ -67,29 +169,17 @@ function loopCells(e) {
 // Note: because loopCells is a callback which has the class context
 // bound to it, this function which is called in the callback doesn't get the
 // context implicitly, so I must pass it. Doesn't feel clean...
-function handleClick(self, cell, pageX, pageY){
-	if (pageX > cell.x && pageX < cell.x+self.universe.cellLength &&
-				pageY > cell.y && pageY < cell.y+self.universe.cellHeight ) {
-		changeCells(self, cell);
-	}
-}
+// function handleClick(self, cell, pageX, pageY){
+// 	if (pageX > cell.x && pageX < cell.x+self.universe.cellLength &&
+// 				pageY > cell.y && pageY < cell.y+self.universe.cellHeight ) {
+// 		changeCells(self, cell);
+// 	}
+// }
 
 // 1 step = 1 generation
 function step(){
-	var self = this;
-	var cellsToChange = [];
-	for (let i = 0; i<this.universe.height; i++){
-		for (let j=0; j<this.universe.length; j++){
-			let cell = this.universe.cells[i][j];
-			transitions(self, cell, cellsToChange);
-		}
-	}
-	// update the cells that should be updated
-	for (let i=0; i<cellsToChange.length; i++){
-		let cell = getCellById(self, cellsToChange[i]);
-		// if the cell state was 0 change to 1, and vice versa.
-		changeCells(self, cell);
-	}
+
+	
 }
 
 /*
