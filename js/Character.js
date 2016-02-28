@@ -2,7 +2,8 @@ import Obj from './Obj';
 
 class Character extends Obj{
   constructor(state,options){
-    super(options, state);
+    super(options);
+    this.state = state;
     this.currY = this.convertPixel(options).y;//in pixel; Y DECREASES
     this.currX = this.convertPixel(options).x;
   }
@@ -81,7 +82,7 @@ class Character extends Obj{
   }
 
 
-   checkCollision(portals, enemies, items){
+   checkCollision(portals, enemies, items, grid){
     var collisionType;
 
     //loop through every object in the map
@@ -92,11 +93,20 @@ class Character extends Obj{
         collsionType = "portals";
         currX = portals[i+1].GridX;//in grid
         currY = portals[i+1].GridY;
-        ctx.beginPath();
-        ctx.arc(currX + 9.14, currY, 17, 0, Math.PI*2, true);//portal size
-        ctx.fillStyle = "#0095DD";
-        ctx.fill();
-        ctx.closePath();
+        var imageObj = new Image();
+        imageObj.onload = function() {
+
+          ctx.drawImage(imageObj, x, y);
+
+        };
+        imageObj.src = "./images/Star2.png";
+
+
+        // ctx.beginPath();
+        // ctx.arc(currX + 9.14, currY, 17, 0, Math.PI*2, true);//portal size
+        // ctx.fillStyle = "#0095DD";
+        // ctx.fill();
+        // ctx.closePath();
       }
     }
 
@@ -108,6 +118,17 @@ class Character extends Obj{
         document.reload();
       }
     }
+
+    for (var i = 0; i < enemies.length; i++) {
+      var pixel = convertPixel(enemies[i]);//in pixel
+      // if(this.currY > i.y && this.currY < i.y - 38.4 && (currX > i.x && currX < i.x + 18.28){
+      if ((this.currY == pixel.y) && (this.currX == pixel.x)) {
+        collsionType = "enemies";
+        document.reload();
+      }
+    }
+
+
     for(var i = 0; i < items.length; i++){
       var pixel = convertPixel(items[i]);//in pixel
       if((this.currY == pixel.y) && (this.currX == pixel.x)){

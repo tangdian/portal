@@ -1,8 +1,8 @@
 class Obj{
-  constructor(options,state){
+  constructor(options){
     this.GridX = options.GridX;
     this.GridY = options.GridY;
-    this.state = 0;//0 is a color0, 1 is color1
+    // this.state = state;//0 is a color0, 1 is color1
 	this.H_BLOCKS = 13;
     this.H_DIMENTION = 256;
     this.V_BLOCKS = 25;

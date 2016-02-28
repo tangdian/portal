@@ -17,7 +17,8 @@ class Game {
 		this.Grid = [];
 		this.portals = [];
 		this.items = [];
-		this.enemies = [];
+		this.movingE = [];
+		this.stillE = [];
 		this.character = new Character(0,{GridX:5,GridY:24});
 		this.point = 0;
 		this.win = false;
@@ -90,7 +91,8 @@ class Game {
 		var self = this;
 
 		setInterval(function() {
-			self.character.draw(self.ctx)
+			self.character.draw(self.ctx);
+			self.character.checkCollision(self.protals, self.enemies, self.items);
 		}, 20);
 	
 		// setInterval(this.character.checkCollision(this.portals,this.enemies,this.items), this.speed);
