@@ -44,13 +44,13 @@ var games = [new Game({
 		"kkk kkk kkk",
 		"kkk xxx xxx",
 		"kkk kkk kkk",
-		"kkk xxx kkk"]
+		"kkk ptB kkk"]
 }), ];
 
 
 
 function chooseGame(num) {
-	games[num].drawGrid();
+	// games[num].drawGrid();
 	games[num].iniSetUp();
 	games[num].draw();
 	// games[num].play();

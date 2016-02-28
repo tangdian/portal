@@ -1,6 +1,6 @@
 import Character from './Character';
 import Obj from './Obj';
-// import Item from ./Character.js;
+import Portal from './Portal.js';
 // import Enemy from ./Character.js;
 
 
@@ -19,13 +19,15 @@ class Game {
 		this.items = [];
 		this.movingE = [];
 		this.stillE = [];
-		this.character = new Character(0,{GridX:5,GridY:24});
+		this.character = new Character(0,{GridX:5,GridY:23});
 		this.point = 0;
 		this.win = false;
 		this.H_BLOCKS = 13;
 		this.H_DIMENTION = 256;
+		this.H = this.H_DIMENSION / this.H_BLOCKS;
 		this.V_BLOCKS = 25;
 		this.V_DIMENTION = 960;
+		this.V = this.V_DIMENSION / this.V_BLOCKS;
 		this.intervalID = 0;
 
 	}
@@ -45,14 +47,14 @@ class Game {
 			console.log(this.plan);
 			this.parse(this.plan);
 
-			this.character.initializeCharacter(this.ctx,this.character.GridX,this.character.GridY);
+			this.character.initializeCharacter(this.ctx);
 
 			// draw(this.Grid) {
 
 			// }
 	}
 
-	
+
 
 	parse(plan) {
 		// let grid = [];
@@ -76,9 +78,9 @@ class Game {
 					this.portals.push(new Portal(1, { GrixX: j, GridY:i}));
 				}
 
-				else if(array[j] == "ptB") {
-					this.portals.push(new Portal(0, { GridX: j, GridY:i}));
-				}
+				// else if(array[j] == "ptB") {
+				// 	this.portals.push(new Portal(0, { GridX: j, GridY:i} ));
+				// }
 			}
 		
 		}
@@ -136,17 +138,54 @@ class Game {
 	draw() {
 		//draw static stuff	
 		// console.log(this.Grid);
+		var ctx = this.ctx;
+		var xshift = this.DIMENSION.CELL_LENGTH;
+		var yshift = this.DIMENSION.CELL_HEIGHT;
 
 		for(var i=0;i<this.stillE.length;i++) {
-
 			let x = this.stillE[i].GridX;
 			let y = this.stillE[i].GridY;
-			console.log("x of obj is" + x);
-			console.log("y of obj is" + y);
 
-			this.ctx.fillRect((1+3*x+x)*this.DIMENSION.CELL_LENGTH,y*this.DIMENSION.CELL_HEIGHT,3*this.DIMENSION.CELL_LENGTH,this.DIMENSION.CELL_HEIGHT);
+			var imageObj = new Image();
+			imageObj.onload = function() {
+
+				ctx.drawImage(imageObj, (1 + 3 * x + x) * xshift, y * yshift);
+
+			};
+			imageObj.src = "./images/Obstacle.png";
+
+			// this.ctx.fillRect(,,3*this.DIMENSION.CELL_LENGTH,this.DIMENSION.CELL_HEIGHT);
 
 			}
+
+
+			for (var i=0;i<this.portals.length;i++) {
+				let x = this.portals[i].GridX;
+				let y = this.portals[i].GridY;
+				if(portals[i].state == 0) {
+					var imageObj = new Image();
+					imageObj.onload = function() {
+
+						ctx.drawImage(imageObj, (1 + 3 * x + x) * xshift, y * yshift);
+
+					};
+					imageObj.src = "./images/potB.png";
+				}
+
+				else {
+					var imageObj = new Image();
+					imageObj.onload = function() {
+
+						ctx.drawImage(imageObj, (1 + 3 * x + x) * xshift, y * yshift);
+
+					};
+					imageObj.src = "./images/potB.png";
+				}
+				
+		}
+
+
+
 		}
 
 
@@ -198,10 +237,10 @@ class Game {
 			var pixel = convertPixel(this.stillE[i]);//in pixel
 			// console.log(pixel.y);
 			// if(this.currY > i.y && this.currY < i.y - 38.4 && (currX > i.x && currX < i.x + 18.28){
-			if (this.character.currY < pixel.y) {
+			if (this.character.currY < (pixel.y+38.4)) {
 				// collsionType = "stillE";
 				clearInterval(this.intervalID);
-				this.iniSetUp();
+				this.character.rebornCharacter(this.ctx);
 				console.log("i am executed");
 				return;
 			}

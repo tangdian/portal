@@ -21,23 +21,18 @@ class Character extends Obj{
 
  initializeCharacter(ctx){
  //only able to access 'this' on the outside
-   var self = this;
-   var bx = this.currX;
-   var by = this.currY;
-   setTimeout(function() {
-     self.clear(ctx, bx, by);
-     var x = self.convertPixel(self.options).x;
-     var y = self.convertPixel(self.options).y;
-     self.currX = x;
-     self.currY = y;
+ 
+   
+     var x = this.currX ;
+     var y = this.currY ;
      var imageObj = new Image();
      imageObj.onload = function() {
 
        ctx.drawImage(imageObj, x, y);
 
      };
-     imageObj.src = "./images/Star2.png";
-   }, 50);
+     imageObj.src = "./images/Black2.png";
+
     // ctx.beginPath();
 
     // ctx.arc(120, 900, 17, 0, Math.PI*2, true);//character size
@@ -46,7 +41,26 @@ class Character extends Obj{
     // ctx.closePath();
   }
 
-  rebornCharacter (ctx)
+  rebornCharacter (ctx) {
+    var self = this;
+    var bx = this.currX;
+    var by = this.currY;
+  
+    setTimeout(function() {
+      self.clear(ctx, bx, by);
+      var x = self.convertPixel(self.options).x;
+      var y = self.convertPixel(self.options).y;
+      self.currX = x;
+      self.currY = y;
+      var imageObj = new Image();
+      imageObj.onload = function() {
+
+        ctx.drawImage(imageObj, x, y);
+
+      };
+      imageObj.src = "./images/Black2.png";
+    }, 50);
+  }
 
   log() {
     console.log("doing");
@@ -69,7 +83,7 @@ class Character extends Obj{
       ctx.drawImage(imageObj, x, y);
 
     };
-    imageObj.src = "./images/Star2.png";
+    imageObj.src = "./images/Black2.png";
 
   }
 

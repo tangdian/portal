@@ -31,7 +31,8 @@ class Obj{
 		 console.log("x is "+ x);
 		 console.log("y is " + y);
 
-	  ctx.clearRect(x,y, 3 * (this.H_DIMENTION / this.H_BLOCKS), 1+(this.V_DIMENTION / this.V_BLOCKS));
+	  // ctx.clearRect(x,y, 3 * (this.H_DIMENTION / this.H_BLOCKS), 1+(this.V_DIMENTION / this.V_BLOCKS));
+		 ctx.clearRect(x, y, 60, 50);
   }
 }
 
