@@ -19,7 +19,7 @@ class Character extends Obj{
   //   return gridPixel;
   // }
 
- initializeCharacter(ctx,GridX,GridY){
+ initializeCharacter(ctx){
  //only able to access 'this' on the outside
    var self = this;
    var bx = this.currX;
@@ -38,8 +38,6 @@ class Character extends Obj{
      };
      imageObj.src = "./images/Star2.png";
    }, 50);
-  
-   
     // ctx.beginPath();
 
     // ctx.arc(120, 900, 17, 0, Math.PI*2, true);//character size
@@ -47,6 +45,8 @@ class Character extends Obj{
     // ctx.fill();
     // ctx.closePath();
   }
+
+  rebornCharacter (ctx)
 
   log() {
     console.log("doing");
