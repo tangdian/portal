@@ -378,7 +378,7 @@ var Game = (function () {
 	}, {
 		key: 'draw',
 		value: function draw() {
-			//draw static stuff	
+			//draw static stuff
 			console.log(this.Grid);
 
 			for (var i = 0; i < this.Grid.length; i++) {
@@ -442,7 +442,7 @@ function loopCells(e) {
 function step() {}
 
 /*
-*	pass the cell through the 4 rules. 
+*	pass the cell through the 4 rules.
 	Note: cells should not update here, since altering 1 before you can
 	analyze the others will cause erroneous outcomes.
 */
