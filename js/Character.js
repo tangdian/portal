@@ -67,7 +67,7 @@ class Character extends Obj{
   }
 
    draw(ctx) {
-      console.log("drawing..");
+      // console.log("drawing..");
 
     
     this.clear(ctx,this.currX,this.currY);

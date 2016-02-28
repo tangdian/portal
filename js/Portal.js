@@ -6,3 +6,7 @@ class Portal extends Obj{
     this.state = state;
   }
 }
+
+
+
+module.exports = Portal;
