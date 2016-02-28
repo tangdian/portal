@@ -41,6 +41,7 @@ function chooseGame(num) {
 	games[num].drawGrid();
 	games[num].iniSetUp();
 	games[num].draw();
+	// games[num].play();
 }
 
 

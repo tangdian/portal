@@ -18,7 +18,7 @@ class Game {
 		this.portals = [];
 		this.items = [];
 		this.enemies = [];
-		this.character = new Character(0,{GridX:6,GridY:24});
+		this.character = new Character(0,{GridX:5,GridY:24});
 		this.point = 0;
 		this.win = false;
 	}
@@ -29,13 +29,16 @@ class Game {
 		// // not sure if this can be improved.
 		// // this.universeElem.addEventListener('click', loopCells.bindthis());
 		// // when user click, start the game
-		document.getElementById('start')
-			.addEventListener('click', this.play.bind(this));
+		var self = this;
+			document.getElementById('start')
+			.addEventListener('click', function() {
+				self.play();
+			});
 
 		console.log(this.plan);
 			this.Grid = this.parse(this.plan);
 
-			this.character.initializeCharacter(this.ctx,this.GridX,this.GridY);
+			this.character.initializeCharacter(this.ctx,this.character.GridX,this.character.GridY);
 
 			// draw(this.Grid) {
 
@@ -78,15 +81,25 @@ class Game {
 
 
 
-	play(e){
+	play(){
 		// remove god mode
 		// this.universeElem.removeEventListener('click', loopCells);
 		// game loop
 		// console.log(this.speed);
-		setInterval(this.character.draw(this.ctx), this.speed);
-		// setInterval(this.character.checkCollision(this.portals,this.enemies,this.items), this.speed);
-		document.addEventListener("keydown", this.character.changeState)
 
+		var self = this;
+
+		setInterval(function() {
+			self.character.draw(self.ctx)
+		}, 20);
+	
+		// setInterval(this.character.checkCollision(this.portals,this.enemies,this.items), this.speed);
+		// document.addEventListener("keydown", this.character.changeState)
+
+	}
+
+	logging() {
+		console.log("logging");
 	}
 
 	// draw grid
@@ -217,7 +230,7 @@ function transitions(self, cell, cellsToChange) {
 		// live cell, as if by reproduction.
 		if (neighboursAlive === 3) cellsToChange.push(cell.id);
 	}
-}
+} 
 
 function changeCells(self, cell) {
 	self.ctx.fillStyle = (cell.state) ? 'white' : '#333';

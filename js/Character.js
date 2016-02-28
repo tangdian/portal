@@ -18,13 +18,15 @@ class Character extends Obj{
   // }
 
  initializeCharacter(ctx,GridX,GridY){
-
+ //only able to access 'this' on the outside
+   var x = this.currX;
+   var y = this.currY;
    var imageObj = new Image();
    imageObj.onload = function() {
-     ctx.drawImage(imageObj, this.GridX * (this.H_DIMENTION / this.H_BLOCKS)-100, this.GridY * (this.V_DIMENTION / this.V_BLOCKS)-600);
-     console.log(GridX * (this.H_DIMENTION / this.H_BLOCKS));
-     console.log(GridY * (this.V_DIMENTION / this.V_BLOCKS));
-   };
+   
+     ctx.drawImage(imageObj, x,y);
+    
+   }; 
    imageObj.src = "./images/Star2.png";
 
   
@@ -39,22 +41,28 @@ class Character extends Obj{
     // ctx.closePath();
   }
 
+  log() {
+    console.log("doing");
+  }
+
    draw(ctx) {
+     console.log("drawing..");
 
-     console.log("car currx: " + this.currX);
-     console.log("car curry: " + this.currY);
-
+    
     this.clear(ctx,this.currX,this.currY);
+    
     var dy = -1;
-
-
-
     this.currY += dy;
-    ctx.beginPath();
-    ctx.arc(this.currX, this.currY, 17, 0, Math.PI*2, true);//character size
-    ctx.fillStyle = "#0095DD";
-    ctx.fill();
-    ctx.closePath();
+
+    var x = this.currX;
+    var y = this.currY;
+    var imageObj = new Image();
+    imageObj.onload = function() {
+
+      ctx.drawImage(imageObj, x, y);
+
+    };
+    imageObj.src = "./images/Star2.png";
 
   }
 
