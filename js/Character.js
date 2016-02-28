@@ -15,19 +15,21 @@ class Character extends Obj{
   //   return gridPixel;
   // }
 
-
-  function drawCharacter() {
-    var dy = -1;
-    /*need to clear*/
+  function initializeCharacter(){
     ctx.beginPath();
-    ctx.arc(x, y, 17, 0, Math.PI*2, true);//character size
+    ctx.arc(120, 900, 17, 0, Math.PI*2, true);//character size
     ctx.fillStyle = "#0095DD";
     ctx.fill();
     ctx.closePath();
+  }
+
+  function draw() {
+    this.clear();
+    var dy = -1;
     y += dy;
   }
 
-  setInterval(drawCharacter ,20);//check every 20ms
+  setInterval(draw ,20);//check every 20ms
 
   function convertPixel(counter){
     var H_BLOCKS = 14;
@@ -40,19 +42,18 @@ class Character extends Obj{
   }
 
 
-  function checkCollision(){
+  function checkCollision(portals, enemies, items){
     var collisionType;
     //loop through every object in the map
     for(var i = 0; i < portal.length; i++){
       var pixel = convertPixel(portal[i]);//in pixel
       if((this.currY == pixel.y) && (this.currX == pixel.x){
-        update();
+        this.clear();
         collsionType = "portal";
         currX = portal[i+1].GridX;//in grid
         currY = portal[i+1].GridY;
         ctx.beginPath();
-        // ctx.rect(newX, newY, 54.857, 38.5);
-        ctx.arc(newX + 9.14, newY, 17, 0, Math.PI*2, true);//portal size
+        ctx.arc(currX + 9.14, currY, 17, 0, Math.PI*2, true);//portal size
         ctx.fillStyle = "#0095DD";
         ctx.fill();
         ctx.closePath();
@@ -72,6 +73,7 @@ class Character extends Obj{
       if((this.currY == pixel.y) && (this.currX == pixel.x){
         collsionType = "items";
         itemCollected ++;
+        console.log(itemCollected);
       }
     }
   }
@@ -84,13 +86,17 @@ class Character extends Obj{
     //register a event listener
     var key = e.keyCode ? e.keyCode : e.which;
     if (key == 38) {
+      console.log("You Pressed the fking Space");
       switch(state):
         case 0:
           state++;
+          console.log("White");
           break;
         case 1:
           state--;
+          console.log("Black");
           break;
      }
   }
+}
 }
