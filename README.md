@@ -1,6 +1,6 @@
-## Portal in ES6
+## PortalRush one-button game in Javascript ES6
 
-To play, first download the repository,then do
+For developing purpose, first download the repository,then do
 
 <code>$ npm install</code>
 
