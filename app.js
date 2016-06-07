@@ -58,7 +58,7 @@ var games = [new Game({
 		"kkk kkk kkk",
 		"kkk its kkk",
 		"kkk kkk kkk",
-		"kkk ptW kkk",
+		"kkk ptB kkk",
 		"kkk kkk kkk",
 		"kkk kkk kkk",
 		"kkk kkk kkk",
@@ -67,7 +67,7 @@ var games = [new Game({
 		"kkk kkk kkk",
 		"kkk kkk kkk",
 		"kkk kkk kkk",
-		"kkk ptW kkk",
+		"kkk ptB kkk",
 		"kkk kkk kkk",
 		"kkk kkk kkk",
 		"kkk kkk kkk",
@@ -403,7 +403,7 @@ function chooseGame(num) {
 }
 
 
-chooseGame(10);
+chooseGame(9);
 
 
 

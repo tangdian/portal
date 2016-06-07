@@ -4,7 +4,6 @@ import Portal from './Portal';
 // import Enemy from ./Character.js;
 
 
-
 class Game {
 	// set up instance variables
 	constructor(options){
@@ -21,7 +20,7 @@ class Game {
 		this.itss = [];
 		this.movingE = [];
 		this.stillE = [];
-		this.character = new Character(0,{GridX:5,GridY:23});
+		this.character = new Character({state:0,GridX:5,GridY:23});
 		this.point = 0;
 		this.win = false;
 		this.H_BLOCKS = 13;
@@ -55,10 +54,6 @@ class Game {
 
 			this.nowptB = this.portalsB.length-1;
 			this.nowptW = this.portalsW.length-1;
-
-			// draw(this.Grid) {
-
-			// }
 	}
 
 
@@ -100,7 +95,6 @@ class Game {
 		
 		}
 
-		// return grid;
 	}
 
 
@@ -113,6 +107,10 @@ class Game {
 		// console.log(this.speed);
 
 		var self = this;
+
+		document.addEventListener("keydown", function(e){
+			  self.character.changeState(e);
+		});
 
 		this.intervalID = setInterval(function() {
 			self.character.draw(self.ctx);
@@ -280,41 +278,97 @@ class Game {
 		// }
 
 	checkCollision() {
+		var self=this;
 		// var collisionType;
 
 		// //loop through every object in the map
-		console.log(this.portalsB[this.nowptB]);
+		// console.log(this.portalsB[this.nowptB])
+
+		if(this.portalsB.length>0) {
+			var pixel = convertPixel(this.portalsB[this.nowptB]);//in pixel
+			// console.log(pixel.x);
+			// console.log(this.character.currX);
+			if ((Math.abs(this.character.currY - pixel.y) < 5) && (Math.abs(this.character.currX - pixel.x) < 5) && (this.character.state == 0)) {
+				console.log("chuan");
+				var tempX = this.character.currX;
+				var tempY = this.character.currY;
+				setTimeout(function() {
+					console.log(tempX);
+					console.log(tempY);
+					self.character.clear(self.ctx, tempX, tempY);
+
+					console.log("cleared");
+				},100);
+				
+				this.nowptB = (this.nowptB +this.portalsB.length- 1) % this.portalsB.length;
+				console.log("nowB is : " + this.nowptB);
+
+				pixel = convertPixel(this.portalsB[this.nowptB]);
+				this.character.currX = pixel.x;
+				this.character.currY = pixel.y-11;
+				console.log(pixel)
+				var imageObj = new Image();
+				var ctx = this.ctx;
+				imageObj.onload = function() {
+
+					ctx.drawImage(this, self.character.currX, self.character.currY);
+
+				};
+				imageObj.src = "./images/Black2.png";
+		}
+			else if (Math.abs(this.character.currY - pixel.y) < 5) {
+			
+				this.nowptB = (this.nowptB + this.portalsB.length - 1) % this.portalsB.length;
+				console.log(this.nowptB);
+			}
+
+
 		
-		  var pixel = convertPixel(this.portalsB[this.nowptB]);//in pixel
-		  console.log(pixel.x);
-		  console.log(this.character.currX);
-		  if((this.character.currY < pixel.y) && (Math.abs(this.character.currX - pixel.x)<10) ){
-			  console.log("chuan");
-		    this.character.clear(this.ctx,60,60);
-			this.nowptB--;
-	
-			pixel = convertPixel(this.protalsB[nowptB]);
-		    this.character.currX = pixel.x//in grid
-		    this.character.currY = pixel.y;
-		    var imageObj = new Image();
-		    imageObj.onload = function() {
-
-		      ctx.drawImage(this, pixel.x, pixel.y);
-
-		    };
-		    imageObj.src = "./images/Black2.png";
-
-
-		    // ctx.beginPath();
-		    // ctx.arc(currX + 9.14, currY, 17, 0, Math.PI*2, true);//portal size
-		    // ctx.fillStyle = "#0095DD";
-		    // ctx.fill();
-		    // ctx.closePath();
 		  }
-		  else if (this.character.currY < pixel.y) {
-			  this.nowptB--;
-			  // this.nowptB= (this.nowptB+this.portalsB.length-1)%this.portalsB.length;
-		  }
+
+
+		if (this.portalsW.length > 0) {
+			var pixel = convertPixel(this.portalsW[this.nowptW]);//in pixel
+			// console.log(pixel.x);
+			// console.log(this.character.currX);
+			if ((Math.abs(this.character.currY - pixel.y) < 5) && (Math.abs(this.character.currX - pixel.x) < 5) && (this.character.state == 1)) {
+				console.log("chuan");
+				var tempX = this.character.currX;
+				var tempY = this.character.currY;
+				setTimeout(function() {
+					console.log(tempX);
+					console.log(tempY);
+					self.character.clear(self.ctx, tempX, tempY);
+
+					console.log("cleared");
+				}, 100);
+
+				this.nowptW = (this.nowptW + this.portalsW.length - 1) % this.portalsW.length;
+				console.log("nowB is : " + this.nowptW);
+
+				pixel = convertPixel(this.portalsW[this.nowptW]);
+				this.character.currX = pixel.x;
+				this.character.currY = pixel.y - 11;
+				console.log(pixel)
+				var imageObj = new Image();
+				var ctx = this.ctx;
+				imageObj.onload = function() {
+
+					ctx.drawImage(this, self.character.currX, self.character.currY);
+
+				};
+				imageObj.src = "./images/White2.png";
+			}
+			else if (Math.abs(this.character.currY - pixel.y) < 5) {
+
+				this.nowptW = (this.nowptW + this.portalsW.length - 1) % this.portalsW.length;
+				console.log(this.nowptW);
+			}
+
+
+
+		}
+		 
 
 		// for (var i = 0; i < this.portalsW.length; i++) {
 		// 	var pixel = convertPixel(this.portalsW[i]);//in pixel
@@ -345,7 +399,7 @@ class Game {
 			var pixel = convertPixel(this.stillE[i]);//in pixel
 			// console.log(pixel.y);
 			// if(this.currY > i.y && this.currY < i.y - 38.4 && (currX > i.x && currX < i.x + 18.28){
-			if (this.character.currY < (pixel.y+38.4)) {
+			if (Math.abs(this.character.currY - (pixel.y+30.4))<5) {
 				// collsionType = "stillE";
 				clearInterval(this.intervalID);
 				this.character.rebornCharacter(this.ctx);

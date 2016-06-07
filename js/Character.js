@@ -1,9 +1,9 @@
 import Obj from './Obj';
 
 class Character extends Obj{
-  constructor(state,options){
+  constructor(options){
     super(options);
-    this.state = state;
+    this.state = options.state;
     this.currY = this.convertPixel(options).y;//in pixel; Y DECREASES
     this.currX = this.convertPixel(options).x;
     this.options = options;
@@ -31,7 +31,7 @@ class Character extends Obj{
        ctx.drawImage(imageObj, x, y);
 
      };
-     imageObj.src = "./images/Black2.png";
+     imageObj.src = "./images/White2.png";
 
     // ctx.beginPath();
 
@@ -72,18 +72,31 @@ class Character extends Obj{
     
     this.clear(ctx,this.currX,this.currY);
     
-    var dy = -1;
+    var dy = -3;
     this.currY += dy;
 
     var x = this.currX;
     var y = this.currY;
-    var imageObj = new Image();
-    imageObj.onload = function() {
 
-      ctx.drawImage(imageObj, x, y);
+    if(this.state == 0) {
+      var imageObj = new Image();
+      imageObj.onload = function() {
 
-    };
-    imageObj.src = "./images/Black2.png";
+        ctx.drawImage(this, x, y);
+
+      };
+      imageObj.src = "./images/Black2.png";
+
+    }
+    else {
+      var imageObj = new Image();
+      imageObj.onload = function() {
+
+        ctx.drawImage(this, x, y);
+
+      };
+      imageObj.src = "./images/White2.png";
+    }
 
   }
 
@@ -102,79 +115,26 @@ class Character extends Obj{
   }
 
 
-   checkCollision(stillE,movingE,portals,items){
-    var collisionType;
-
-    // //loop through every object in the map
-    // for(var i = 0; i < portals.length; i++){
-    //   var pixel = this.convertPixel(portals[i]);//in pixel
-    //   if((this.currY == pixel.y) && (this.currX == pixel.x)){
-    //     this.clear();
-    //     collsionType = "portals";
-    //     currX = portals[i+1].GridX;//in grid
-    //     currY = portals[i+1].GridY;
-    //     var imageObj = new Image();
-    //     imageObj.onload = function() {
-
-    //       ctx.drawImage(imageObj, x, y);
-
-    //     };
-    //     imageObj.src = "./images/Star2.png";
-
-
-    //     // ctx.beginPath();
-    //     // ctx.arc(currX + 9.14, currY, 17, 0, Math.PI*2, true);//portal size
-    //     // ctx.fillStyle = "#0095DD";
-    //     // ctx.fill();
-    //     // ctx.closePath();
-    //   }
-    // }
-
-    for(var i = 0; i < stillE.length; i++){
-      var pixel = this.convertPixel(stillE[i]);//in pixel
-      // console.log(pixel.y);
-      // if(this.currY > i.y && this.currY < i.y - 38.4 && (currX > i.x && currX < i.x + 18.28){
-      if(this.currY < pixel.y){
-        // collsionType = "stillE";
-        document.reload();
-      }
-    }
-
-    for (var i = 0; i < movingE.length; i++) {
-      var pixel = this.convertPixel(movingE[i]);//in pixel
-      // if(this.currY > i.y && this.currY < i.y - 38.4 && (currX > i.x && currX < i.x + 18.28){
-      if ((this.currY == pixel.y) && (this.currX == pixel.x)) {
-        document.reload();
-      }
-    }
-
-
-    for(var i = 0; i < items.length; i++){
-      var pixel = this.convertPixel(items[i]);//in pixel
-      if((this.currY == pixel.y) && (this.currX == pixel.x)){
-        itemCollected ++;
-        console.log(itemCollected);
-      }
-    }
-  }
-
-  // setInterval(checkCollision ,20);//check every 20ms
-  // document.addEventListener("keydown", changeState);
 
 
    changeState(e){
     //register a event listener
     var key = e.keyCode ? e.keyCode : e.which;
-    if (key == 38) {
+    console.log("state is"+this.state);
+    if (key == 70) {
       console.log("You Pressed the fking Space");
-      switch(state){
+
+      switch(this.state){
         case 0:
-          state++;
+          this.state++;
           console.log("White");
           break;
         case 1:
-          state--;
+          this.state--;
           console.log("Black");
+          break;
+        default:
+          console.log("fuck");
           break;
       }
 
