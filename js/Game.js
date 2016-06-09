@@ -112,10 +112,11 @@ class Game {
 			  self.character.changeState(e);
 		});
 		self.character.draw(self.ctx);
-
+		//self.checkCollision();
 		this.intervalID = setInterval(function() {
-			self.character.move();
-			self.checkCollision();
+			self.character.move(); 
+			//console.log ("fuck why");
+			
 		}, 20);
 	
 		// setInterval(this.character.checkCollision(this.portals,this.enemies,this.items), this.speed);

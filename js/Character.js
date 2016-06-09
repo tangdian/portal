@@ -65,7 +65,7 @@ class Character extends Obj{
   }
 
   move() {
-    var dy = -3;
+    var dy = -1;
     this.currY += dy;
   }
 
