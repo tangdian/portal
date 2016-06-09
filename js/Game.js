@@ -51,7 +51,7 @@ class Game {
 			this.parse(this.plan);
 
 			this.character.initializeCharacter(this.ctx);
-
+			self.draw();
 			this.nowptB = this.portalsB.length-1;
 			this.nowptW = this.portalsW.length-1;
 	}
@@ -108,14 +108,14 @@ class Game {
 
 		var self = this;
 
-		document.addEventListener("keydown", function(e){
+		document.addEventListener("keypress", function(e){
 			  self.character.changeState(e);
 		});
+		self.character.draw(self.ctx);
 
 		this.intervalID = setInterval(function() {
-			self.character.draw(self.ctx);
+			self.character.move();
 			self.checkCollision();
-			self.draw();
 		}, 20);
 	
 		// setInterval(this.character.checkCollision(this.portals,this.enemies,this.items), this.speed);
@@ -150,94 +150,159 @@ class Game {
 	}
 
 	draw() {
-		this.clear
-		console.log(this.portalsB);
-		console.log(this.portalsW);
-		//draw static stuff	
-		// console.log(this.Grid);
 		var ctx = this.ctx;
 		var xshift = this.DIMENSION.CELL_LENGTH;
 		var yshift = this.DIMENSION.CELL_HEIGHT;
+		console.log(this.portalsB);
+		console.log(this.portalsW);
+		var obstacleImg = new Image();
+		obstacleImg.src = "./images/Obstacle.png";
+		var potBImg = new Image();
+		potBImg.src = "./images/potB.png";
+		var potWImg = new Image();
+		potWImg.src = "./images/potW.png";
+		var star2Img = new Image();
+		star2Img.src = "./images/Star2.png";
+		var revImg = new Image();
+		revImg.src = "./images/reverse.png";
+		var bChar = new Image();
+	    var wChar = new Image();
+	    bChar.src = "./images/Black2.png";
+	    wChar.src = "./images/White2.png";
+		setInterval(() => {
+			ctx.clearRect(0, 0, this.H_DIMENTION,  this.V_DIMENTION);
+			for (var i = 0; i < this.stillE.length; i++) {
+				let x = this.stillE[i].GridX;
+				let y = this.stillE[i].GridY;
+				ctx.drawImage(obstacleImg, x * xshift, y * yshift);
 
-		for (var i = 0; i < this.stillE.length; i++) {
-			let x = this.stillE[i].GridX;
-			let y = this.stillE[i].GridY;
+				// this.ctx.fillRect(,,3*this.DIMENSION.CELL_LENGTH,this.DIMENSION.CELL_HEIGHT);
 
-			var imageObj = new Image();
-			imageObj.onload = function() {
-
-				ctx.drawImage(this, x * xshift, y * yshift);
-
-			};
-			imageObj.src = "./images/Obstacle.png";
-
-			// this.ctx.fillRect(,,3*this.DIMENSION.CELL_LENGTH,this.DIMENSION.CELL_HEIGHT);
-
-		}
+			}
 
 
-		for (var i = 0; i < this.portalsB.length; i++) {
-			let x = this.portalsB[i].GridX;
-			let y = this.portalsB[i].GridY;
-			
-				var imageObj = new Image();
-				imageObj.onload = function() {
-
-					ctx.drawImage(this, x * xshift, y * yshift);
-
-				};
-				imageObj.src = "./images/potB.png";
-		
-		}
-
+			for (var i = 0; i < this.portalsB.length; i++) {
+				let x = this.portalsB[i].GridX;
+				let y = this.portalsB[i].GridY;		
+				ctx.drawImage(potBImg, x * xshift, y * yshift);
+			}
 
 			for (var i = 0; i < this.portalsW.length; i++) {
 				let x = this.portalsW[i].GridX;
-				let y = this.portalsW[i].GridY;
-			
-					var imageObj = new Image();
-					imageObj.onload = function() {
-
-						ctx.drawImage(this, x * xshift, y * yshift);
-
-					};
-					imageObj.src = "./images/potW.png";
-				
-
-
+				let y = this.portalsW[i].GridY;		
+				ctx.drawImage(potWImg, x * xshift, y * yshift);
 			}
 
 			for (var i = 0; i < this.itss.length; i++) {
 				let x = this.itss[i].GridX;
-				let y = this.itss[i].GridY;
-
-				var imageObj = new Image();
-				imageObj.onload = function() {
-
-					ctx.drawImage(this, x * xshift, y * yshift);
-
-				};
-				imageObj.src = "./images/Star2.png";
-
-
-
+				let y = this.itss[i].GridY;		
+				ctx.drawImage(star2Img, x * xshift, y * yshift);
 			}
 
 			for (var i = 0; i < this.itrs.length; i++) {
 				let x = this.itrs[i].GridX;
-				let y = this.itrs[i].GridY;
-
-				var imageObj = new Image();
-				imageObj.onload = function() {
-
-					ctx.drawImage(this, x * xshift, y * yshift);
-
-				};
-				imageObj.src = "./images/reverse.png";
-
-
-
+				let y = this.itrs[i].GridY;		
+				ctx.drawImage(revImg, x * xshift, y * yshift);
 			}
+			
+
+
+			if (this.character.state == 0) {
+				ctx.drawImage(bChar, this.character.currX, this.character.currY);
+			}
+			else {
+				ctx.drawImage(wChar, this.character.currX, this.character.currY);
+			}
+
+
+
+
+
+
+
+
+		},20);
+		
+		// //draw static stuff	
+		// for (var i = 0; i < this.stillE.length; i++) {
+		// 	let x = this.stillE[i].GridX;
+		// 	let y = this.stillE[i].GridY;
+
+		// 	var imageObj = new Image();
+		// 	imageObj.onload = function() {
+
+		// 		setInterval (() => ctx.drawImage(this, x * xshift, y * yshift),20);
+
+		// 	};
+		// 	imageObj.src = "./images/Obstacle.png";
+
+		// 	// this.ctx.fillRect(,,3*this.DIMENSION.CELL_LENGTH,this.DIMENSION.CELL_HEIGHT);
+
+		// }
+
+
+		// for (var i = 0; i < this.portalsB.length; i++) {
+		// 	let x = this.portalsB[i].GridX;
+		// 	let y = this.portalsB[i].GridY;
+			
+		// 		var imageObj = new Image();
+		// 		imageObj.onload = function() {
+
+		// 			setInterval (() => ctx.drawImage(this, x * xshift, y * yshift),20);
+
+		// 		};
+		// 		imageObj.src = "./images/potB.png";
+		
+		// }
+
+
+		// 	for (var i = 0; i < this.portalsW.length; i++) {
+		// 		let x = this.portalsW[i].GridX;
+		// 		let y = this.portalsW[i].GridY;
+			
+		// 			var imageObj = new Image();
+		// 			imageObj.onload = function() {
+
+		// 				setInterval (() => ctx.drawImage(this, x * xshift, y * yshift),20);
+
+		// 			};
+		// 			imageObj.src = "./images/potW.png";
+				
+
+
+		// 	}
+
+		// 	for (var i = 0; i < this.itss.length; i++) {
+		// 		let x = this.itss[i].GridX;
+		// 		let y = this.itss[i].GridY;
+
+		// 		var imageObj = new Image();
+		// 		imageObj.onload = function() {
+
+		// 			setInterval (() => ctx.drawImage(this, x * xshift, y * yshift),20);
+
+		// 		};
+		// 		imageObj.src = "./images/Star2.png";
+
+
+
+		// 	}
+
+		// 	for (var i = 0; i < this.itrs.length; i++) {
+		// 		let x = this.itrs[i].GridX;
+		// 		let y = this.itrs[i].GridY;
+
+		// 		var imageObj = new Image();
+		// 		imageObj.onload = function() {
+
+		// 			setInterval (() => ctx.drawImage(this, x * xshift, y * yshift),20);
+
+		// 		};
+		// 		imageObj.src = "./images/reverse.png";
+
+
+
+		// 	}
 
 			// for (var i = 0; i < this.items.length; i++) {
 			// 	let x = this.portalsW[i].GridX;
@@ -281,11 +346,15 @@ class Game {
 
 	checkCollision() {
 		var self=this;
+		var bChar = new Image();
+		bChar.src = "./images/Black2.png";
+		var wChar = new Image();
+		wChar.src = "./images/White2.png";
 		// var collisionType;
 
 		// //loop through every object in the map
 		// console.log(this.portalsB[this.nowptB])
-
+		setInterval( () => {
 		if(this.portalsB.length>0) {
 			var pixel = convertPixel(this.portalsB[this.nowptB]);//in pixel
 			// console.log(pixel.x);
@@ -311,12 +380,7 @@ class Game {
 				console.log(pixel)
 				var imageObj = new Image();
 				var ctx = this.ctx;
-				imageObj.onload = function() {
-
-					ctx.drawImage(this, self.character.currX, self.character.currY);
-
-				};
-				imageObj.src = "./images/Black2.png";
+				ctx.drawImage(bChar, self.character.currX, self.character.currY);
 		}
 			else if (Math.abs(this.character.currY - pixel.y) < 5) {
 			
@@ -354,12 +418,7 @@ class Game {
 				console.log(pixel)
 				var imageObj = new Image();
 				var ctx = this.ctx;
-				imageObj.onload = function() {
-
-					ctx.drawImage(this, self.character.currX, self.character.currY);
-
-				};
-				imageObj.src = "./images/White2.png";
+				ctx.drawImage(wChar, self.character.currX, self.character.currY);
 			}
 			else if (Math.abs(this.character.currY - pixel.y) < 5) {
 
@@ -427,12 +486,10 @@ class Game {
 		// 		console.log(this.point);
 		// 	}
 		// }
-	}
-
+},20);
 
 }
-
-
+}
 
 
 function convertPixel(counter){

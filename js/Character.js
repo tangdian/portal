@@ -27,11 +27,9 @@ class Character extends Obj{
      var y = this.currY ;
      var imageObj = new Image();
      imageObj.onload = function() {
-
        ctx.drawImage(imageObj, x, y);
-
      };
-     imageObj.src = "./images/White2.png";
+     imageObj.src = "./images/Black2.png";
 
     // ctx.beginPath();
 
@@ -66,39 +64,43 @@ class Character extends Obj{
     console.log("doing");
   }
 
-   draw(ctx) {
-      // console.log("drawing..");
-
-    this.clear(ctx);
-    // this.clear(ctx,this.currX,this.currY);
-    
+  move() {
     var dy = -3;
     this.currY += dy;
+  }
+
+   draw(ctx) {
+      // console.log("drawing..");
+    // this.clear(ctx,this.currX,this.currY);
+    
+
 
     var x = this.currX;
     var y = this.currY;
-
-    if(this.state == 0) {
-      var imageObj = new Image();
-      imageObj.onload = function() {
-
-        ctx.drawImage(this, x, y);
-
-      };
-      imageObj.src = "./images/Black2.png";
-
+    var imageObjB = new Image();
+    var imageObjW = new Image();
+    imageObjB.src = "./images/Black2.png";
+    imageObjW.src = "./images/White2.png";
+    imageObjB.onload = function() {
+        setInterval(() => {
+          if(this.state == 0) {
+            ctx.drawImage(this, x, y);
+          }
+        },20);
+      }
+    imageObjW.onload = function() {
+        setInterval(() => {
+          if(this.state == 1) {
+            ctx.drawImage(this, x, y);
+          }
+        },20);
+      }
+    
+      imageObjB.src = "./images/Black2.png";
+      imageObjW.src = "./images/White2.png";
     }
-    else {
-      var imageObj = new Image();
-      imageObj.onload = function() {
 
-        ctx.drawImage(this, x, y);
 
-      };
-      imageObj.src = "./images/White2.png";
-    }
-
-  }
 
   // setInterval(draw ,20);//check every 20ms
 
@@ -121,7 +123,7 @@ class Character extends Obj{
     //register a event listener
     var key = e.keyCode ? e.keyCode : e.which;
     console.log("state is"+this.state);
-    if (key == 70) {
+    if (key == 32) {
       console.log("You Pressed the fking Space");
 
       switch(this.state){
