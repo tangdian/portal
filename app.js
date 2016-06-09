@@ -404,5 +404,5 @@ function chooseGame(num) {
 
 
 
-chooseGame(10);
+chooseGame(9);
 

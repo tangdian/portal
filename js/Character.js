@@ -47,7 +47,7 @@ class Character extends Obj{
     var by = this.currY;
   
     setTimeout(function() {
-      self.clear(ctx, bx, by);
+      self.clear(ctx);
       var x = self.convertPixel(self.options).x;
       var y = self.convertPixel(self.options).y;
       self.currX = x;
@@ -69,8 +69,8 @@ class Character extends Obj{
    draw(ctx) {
       // console.log("drawing..");
 
-    
-    this.clear(ctx,this.currX,this.currY);
+    this.clear(ctx);
+    // this.clear(ctx,this.currX,this.currY);
     
     var dy = -3;
     this.currY += dy;

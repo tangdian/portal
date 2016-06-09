@@ -115,6 +115,7 @@ class Game {
 		this.intervalID = setInterval(function() {
 			self.character.draw(self.ctx);
 			self.checkCollision();
+			self.draw();
 		}, 20);
 	
 		// setInterval(this.character.checkCollision(this.portals,this.enemies,this.items), this.speed);
@@ -149,6 +150,7 @@ class Game {
 	}
 
 	draw() {
+		this.clear
 		console.log(this.portalsB);
 		console.log(this.portalsW);
 		//draw static stuff	

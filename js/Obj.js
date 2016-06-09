@@ -23,7 +23,7 @@ class Obj{
  //    return gridPixel;
 	// }
 
-	 clear(ctx,x,y) {
+	 clear(ctx) {
 		 // console.log(this.H_DIMENTION / this.H_BLOCKS);
 		 // // console.log(this.GridX);
 		 // var x = this.GridX * (this.H_DIMENTION / this.H_BLOCKS);
@@ -32,7 +32,7 @@ class Obj{
 		 // console.log("y is " + y);
 
 	  // ctx.clearRect(x,y, 3 * (this.H_DIMENTION / this.H_BLOCKS), 1+(this.V_DIMENTION / this.V_BLOCKS));
-		 ctx.clearRect(x, y, 60, 60);
+		 ctx.clearRect(0, 0, this.H_DIMENTION,  this.V_DIMENTION);
   }
 }
 
