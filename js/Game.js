@@ -30,8 +30,8 @@ class Game {
 		this.V_DIMENTION = 960;
 		this.V = this.V_DIMENSION / this.V_BLOCKS;
 		this.intervalID = 0;
-		this.nowptB;
-		this.nowptW;
+		this.nowptB = 0;
+		this.nowptW = 0;
 
 	}
 
@@ -52,6 +52,8 @@ class Game {
 
 			this.character.initializeCharacter(this.ctx);
 			self.draw();
+			self.checkCollision();
+			self.character.draw(self.ctx);
 			this.nowptB = this.portalsB.length-1;
 			this.nowptW = this.portalsW.length-1;
 	}
@@ -111,8 +113,9 @@ class Game {
 		document.addEventListener("keypress", function(e){
 			  self.character.changeState(e);
 		});
-		self.character.draw(self.ctx);
-		//self.checkCollision();
+
+		clearInterval(this.intervalID);
+
 		this.intervalID = setInterval(function() {
 			self.character.move(); 
 			//console.log ("fuck why");
@@ -361,32 +364,34 @@ class Game {
 			// console.log(pixel.x);
 			// console.log(this.character.currX);
 			if ((Math.abs(this.character.currY - pixel.y) < 5) && (Math.abs(this.character.currX - pixel.x) < 5) && (this.character.state == 0)) {
-				console.log("chuan");
+				console.log("chuan black");
 				var tempX = this.character.currX;
 				var tempY = this.character.currY;
-				setTimeout(function() {
-					console.log(tempX);
-					console.log(tempY);
-					self.character.clear(self.ctx, tempX, tempY);
+				// setTimeout(function() {
+				// 	console.log(tempX);
+				// 	console.log(tempY);
+				// 	self.character.clear(self.ctxY);
 
-					console.log("cleared");
-				},100);
+				// 	console.log("cleared");
+				// },100);
 				
-				this.nowptB = (this.nowptB +this.portalsB.length- 1) % this.portalsB.length;
+				// this.nowptB = (this.nowptB +this.portalsB.length- 1) % this.portalsB.length;
+				this.nowptB  = this.nowptB-2;
 				console.log("nowB is : " + this.nowptB);
 
-				pixel = convertPixel(this.portalsB[this.nowptB]);
+				pixel = convertPixel(this.portalsB[this.nowptB+1]);
 				this.character.currX = pixel.x;
 				this.character.currY = pixel.y-11;
-				console.log(pixel)
+				console.log(pixel);
 				var imageObj = new Image();
 				var ctx = this.ctx;
 				ctx.drawImage(bChar, self.character.currX, self.character.currY);
 		}
 			else if (Math.abs(this.character.currY - pixel.y) < 5) {
-			
-				this.nowptB = (this.nowptB + this.portalsB.length - 1) % this.portalsB.length;
-				console.log(this.nowptB);
+				console.log ("Black is minused!");
+				// this.nowptB = (this.nowptB + this.portalsB.length - 1) % this.portalsB.length;
+				this.nowptB = this.nowptB - 1;
+				console.log('now PT B is : ' + this.nowptB);
 			}
 
 
@@ -399,32 +404,34 @@ class Game {
 			// console.log(pixel.x);
 			// console.log(this.character.currX);
 			if ((Math.abs(this.character.currY - pixel.y) < 5) && (Math.abs(this.character.currX - pixel.x) < 5) && (this.character.state == 1)) {
-				console.log("chuan");
+				console.log("chuan white");
 				var tempX = this.character.currX;
 				var tempY = this.character.currY;
-				setTimeout(function() {
-					console.log(tempX);
-					console.log(tempY);
-					self.character.clear(self.ctx, tempX, tempY);
+				// setTimeout(function() {
+				// 	console.log(tempX);
+				// 	console.log(tempY);
+				// 	self.character.clear(self.ctx, tempX, tempY);
 
-					console.log("cleared");
-				}, 100);
+				// 	console.log("cleared");
+				// }, 100);
 
-				this.nowptW = (this.nowptW + this.portalsW.length - 1) % this.portalsW.length;
-				console.log("nowB is : " + this.nowptW);
+				//this.nowptW = (this.nowptW + this.portalsW.length - 1) % this.portalsW.length;
+				this.nowptW  = this.nowptW-2;
+				console.log("nowW is : " + this.nowptW+1);
 
-				pixel = convertPixel(this.portalsW[this.nowptW]);
+				pixel = convertPixel(this.portalsW[this.nowptW+1]);
 				this.character.currX = pixel.x;
 				this.character.currY = pixel.y - 11;
-				console.log(pixel)
+				console.log(pixel);
 				var imageObj = new Image();
 				var ctx = this.ctx;
 				ctx.drawImage(wChar, self.character.currX, self.character.currY);
 			}
 			else if (Math.abs(this.character.currY - pixel.y) < 5) {
-
-				this.nowptW = (this.nowptW + this.portalsW.length - 1) % this.portalsW.length;
-				console.log(this.nowptW);
+				console.log ("White is minused!");
+				// this.nowptW = (this.nowptW + this.portalsW.length - 1) % this.portalsW.length;
+				this.nowptW = this.nowptW - 1;
+				console.log('now PT w is : ' + this.nowptW);
 			}
 
 
@@ -461,11 +468,13 @@ class Game {
 			var pixel = convertPixel(this.stillE[i]);//in pixel
 			// console.log(pixel.y);
 			// if(this.currY > i.y && this.currY < i.y - 38.4 && (currX > i.x && currX < i.x + 18.28){
-			if (Math.abs(this.character.currY - (pixel.y+30.4))<5) {
+			if (Math.abs(this.character.currY - (pixel.y-30.4))<5) {
 				// collsionType = "stillE";
 				clearInterval(this.intervalID);
 				this.character.rebornCharacter(this.ctx);
 				console.log("i am executed");
+				this.nowptB = this.portalsB.length-1;
+				this.nowptW = this.portalsW.length-1;
 				return;
 			}
 		}
