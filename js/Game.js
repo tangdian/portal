@@ -10,6 +10,10 @@ class Game {
     this.canvas = options.canvas;
     this.ctx = options.context;
     this.DIMENSION = options.DIMENSION;
+    console.log (options.DIMENSION);
+    this.RATIO = options.DIMENSION.RATIO;
+    this.H_DIMENTION = options.DIMENSION.H_DIMENSION;
+    this.V_DIMENTION = options.DIMENSION.V_DIMENSION;
     this.universeElem = document.getElementById('universe');
     this.speed = options.speed;
     this.plan = options.plan;
@@ -22,16 +26,18 @@ class Game {
     this.stillE = [];
     this.character = new Character({
       state: 0,
+      H_DIMENTION: this.H_DIMENTION,
+      V_DIMENTION: this.V_DIMENTION,
       GridX: 5,
       GridY: 23
     });
     this.point = 0;
     this.win = false;
     this.H_BLOCKS = 13;
-    this.H_DIMENTION = 256;
+
     this.H = this.H_DIMENSION / this.H_BLOCKS;
     this.V_BLOCKS = 25;
-    this.V_DIMENTION = 960;
+
     this.V = this.V_DIMENSION / this.V_BLOCKS;
     this.moveInterval = 0;
     this.drawInterval = 0;
@@ -46,8 +52,15 @@ class Game {
         self.play();
       });
 
+      document.getElementById('switch')
+      .addEventListener('click', function() {
+        self.character.changeState();
+      });
+
     document.addEventListener("keypress", function(e) {
-      self.character.changeState(e);
+    	var key = e.keyCode ? e.keyCode : e.which;
+    	if (key == 102)
+     	 self.character.changeState();
     });
 
     console.log(this.plan);
@@ -123,28 +136,6 @@ class Game {
   }
 
 
-  // draw grid
-  drawGrid() {
-    this.ctx.strokeStyle = '#777';
-    this.ctx.lineWidth = 1;
-    // vertical lines
-    for (let i = 1; i < this.DIMENSION.UNIVERSE_LENGTH; i++) {
-      this.ctx.beginPath();
-      this.ctx.moveTo(this.DIMENSION.CELL_LENGTH * i, 0);
-      this.ctx.lineTo(this.DIMENSION.CELL_LENGTH * i,
-        this.DIMENSION.UNIVERSE_HEIGHT * this.DIMENSION.CELL_HEIGHT);
-      this.ctx.stroke();
-    }
-    // horizontal lines
-    for (let i = 1; i < this.DIMENSION.UNIVERSE_HEIGHT; i++) {
-      this.ctx.beginPath();
-      this.ctx.moveTo(0, this.DIMENSION.CELL_HEIGHT * i);
-      this.ctx.lineTo(this.DIMENSION.UNIVERSE_LENGTH * this.DIMENSION.CELL_LENGTH,
-        this.DIMENSION.CELL_HEIGHT * i);
-      this.ctx.stroke();
-    }
-  }
-
   draw() {
     var ctx = this.ctx;
     var xshift = this.DIMENSION.CELL_LENGTH;
@@ -170,43 +161,40 @@ class Game {
       for (var i = 0; i < this.stillE.length; i++) {
         let x = this.stillE[i].GridX;
         let y = this.stillE[i].GridY;
-        ctx.drawImage(obstacleImg, x * xshift, y * yshift);
-
-        // this.ctx.fillRect(,,3*this.DIMENSION.CELL_LENGTH,this.DIMENSION.CELL_HEIGHT);
-
+        ctx.drawImage(obstacleImg, x * xshift, y * yshift, 80*this.RATIO, 60*this.RATIO);
       }
 
 
       for (var i = 0; i < this.portalsB.length; i++) {
         let x = this.portalsB[i].GridX;
         let y = this.portalsB[i].GridY;
-        ctx.drawImage(potBImg, x * xshift, y * yshift);
+        ctx.drawImage(potBImg, x * xshift, y * yshift, 70*this.RATIO, 36*this.RATIO);
       }
 
       for (var i = 0; i < this.portalsW.length; i++) {
         let x = this.portalsW[i].GridX;
         let y = this.portalsW[i].GridY;
-        ctx.drawImage(potWImg, x * xshift, y * yshift);
+        ctx.drawImage(potWImg, x * xshift, y * yshift, 70*this.RATIO, 36*this.RATIO);
       }
 
       for (var i = 0; i < this.itss.length; i++) {
         let x = this.itss[i].GridX;
         let y = this.itss[i].GridY;
-        ctx.drawImage(star2Img, x * xshift, y * yshift);
+        ctx.drawImage(star2Img, x * xshift, y * yshift,70*this.RATIO, 36*this.RATIO);
       }
 
       for (var i = 0; i < this.itrs.length; i++) {
         let x = this.itrs[i].GridX;
         let y = this.itrs[i].GridY;
-        ctx.drawImage(revImg, x * xshift, y * yshift);
+        ctx.drawImage(revImg, x * xshift, y * yshift, 70*this.RATIO, 36*this.RATIO);
       }
 
 
 
       if (this.character.state == 0) {
-        ctx.drawImage(bChar, this.character.currX, this.character.currY);
+        ctx.drawImage(bChar, this.character.currX, this.character.currY, 50*this.RATIO, 50*this.RATIO);
       } else {
-        ctx.drawImage(wChar, this.character.currX, this.character.currY);
+        ctx.drawImage(wChar, this.character.currX, this.character.currY, 50*this.RATIO, 50*this.RATIO);
       }
 
 
@@ -222,17 +210,18 @@ class Game {
 
     //loop through every object in the map
     setInterval(() => {
+      console.log ("running");
       if (this.portalsB.length > 0) {
         for (let i = 0; i < this.portalsB.length; i++) {
-          var pixel = convertPixel(this.portalsB[i]);
+          var pixel = this.convertPixel(this.portalsB[i]);
           if ((Math.abs(this.character.currY - pixel.y) < 5) 
             && (Math.abs(this.character.currX - pixel.x) < 5) 
             && (this.character.state == 0)) {
             if (i == 0) {
-              var newLoc = convertPixel(this.portalsB[this.portalsB.length - 1]);
+              var newLoc = this.convertPixel(this.portalsB[this.portalsB.length - 1]);
             }
             else {
-              var newLoc = convertPixel(this.portalsB[i - 1]);
+              var newLoc = this.convertPixel(this.portalsB[i - 1]);
             }
             this.character.currX = newLoc.x;
             if (this.character.direction == 0)
@@ -244,13 +233,13 @@ class Game {
 
       if (this.portalsW.length > 0) {
         for (let i = 0; i < this.portalsW.length; i++) {
-          var pixel = convertPixel(this.portalsW[i]);
+          var pixel = this.convertPixel(this.portalsW[i]);
           if ((Math.abs(this.character.currY - pixel.y) < 5) && (Math.abs(this.character.currX - pixel.x) < 5) && (this.character.state == 1)) {
             if (i == 0) {
-              var newLoc = convertPixel(this.portalsW[this.portalsW.length - 1]);
+              var newLoc = this.convertPixel(this.portalsW[this.portalsW.length - 1]);
             }
             else {
-              var newLoc = convertPixel(this.portalsW[i - 1]);
+              var newLoc = this.convertPixel(this.portalsW[i - 1]);
             }
             this.character.currX = newLoc.x;
             if (this.character.direction == 0)
@@ -261,7 +250,7 @@ class Game {
       }
 
       for (var i = 0; i < this.stillE.length; i++) {
-        var pixel = convertPixel(this.stillE[i]); //in pixel
+        var pixel = this.convertPixel(this.stillE[i]); //in pixel
          if ((Math.abs(this.character.currY - pixel.y) < 5) && (Math.abs(this.character.currX - pixel.x) < 5)) {
           clearInterval(this.moveInterval);
           this.character.rebornCharacter(this.ctx);
@@ -270,7 +259,7 @@ class Game {
       }
 
       for (var i = 0; i < this.itss.length; i++) {
-        var pixel = convertPixel(this.itss[i]); //in pixel
+        var pixel = this.convertPixel(this.itss[i]); //in pixel
         if ((Math.abs(this.character.currY - pixel.y) < 5) && (Math.abs(this.character.currX - pixel.x) < 5)) {
           clearInterval(this.moveInterval);
           this.character.rebornCharacter(this.ctx);
@@ -279,7 +268,7 @@ class Game {
       }
 
       for (var i = 0; i < this.itrs.length; i++) {
-        var pixel = convertPixel(this.itrs[i]); //in pixel
+        var pixel = this.convertPixel(this.itrs[i]); //in pixel
         if ((Math.abs(this.character.currY - pixel.y) < 5) && (Math.abs(this.character.currX - pixel.x) < 5)) {
           this.character.reverse();
 
@@ -308,20 +297,22 @@ class Game {
       self.character.changeState(e);
     });
   }
+
+  convertPixel(counter) {
+    // var H_BLOCKS = 13;
+    // var H_DIMENTION = 256;
+    // var V_BLOCKS = 25;
+    // var V_DIMENTION = 960;
+    var gridPixel = {
+      x: counter.GridX * (this.H_DIMENTION / this.H_BLOCKS),
+      y: (counter.GridY) * (this.V_DIMENTION / this.V_BLOCKS)
+    };
+    return gridPixel;
+}
 }
 
 
-function convertPixel(counter) {
-  var H_BLOCKS = 13;
-  var H_DIMENTION = 256;
-  var V_BLOCKS = 25;
-  var V_DIMENTION = 960;
-  var gridPixel = {
-    x: counter.GridX * (H_DIMENTION / H_BLOCKS),
-    y: (counter.GridY) * (V_DIMENTION / V_BLOCKS)
-  }
-  return gridPixel;
-}
+
 
 
 module.exports = Game;

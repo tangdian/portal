@@ -3,9 +3,9 @@ class Obj{
     this.GridX = options.GridX;
     this.GridY = options.GridY;
 	this.H_BLOCKS = 13;
-    this.H_DIMENTION = 256;
+    this.H_DIMENTION = options.H_DIMENTION;
     this.V_BLOCKS = 25;
-    this.V_DIMENTION = 960;
+    this.V_DIMENTION = options.V_DIMENTION;
 
   }
 

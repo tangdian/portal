@@ -78,21 +78,15 @@ class Character extends Obj {
     var gridPixel = {
       x: counter.GridX * (this.H_DIMENTION / this.H_BLOCKS),
       y: (counter.GridY) * (this.V_DIMENTION / this.V_BLOCKS)
-    }
+    };
+    console.log(gridPixel);
     return gridPixel;
   }
 
 
 
 
-  changeState(e) {
-    //register a event listener
-    var key = e.keyCode ? e.keyCode : e.which;
-    // console.log(key);
-    console.log("state is" + this.state);
-    if (key == 102) {
-      console.log("You Pressed the fking F");
-
+  changeState() {
       switch (this.state) {
         case 0:
           this.state++;
@@ -106,8 +100,6 @@ class Character extends Obj {
           console.log("fuck");
           break;
       }
-
-    }
   }
 }
 

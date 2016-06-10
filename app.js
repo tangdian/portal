@@ -8,16 +8,24 @@ const UNIVERSE_LENGTH = 13;
 const UNIVERSE_HEIGHT = 25;
 
 const DIMENSION = {
-
+   RATIO: window.innerWidth/1920,
+   H_DIMENSION: 256 * window.innerWidth/1920,
+   V_DIMENSION: 960 * window.innerWidth/1920,
+  //H_DIMENSION:256,
+  //V_DIMENSION:960,
   UNIVERSE_LENGTH: 13,
   UNIVERSE_HEIGHT: 25,
-  CELL_LENGTH: 256 / UNIVERSE_LENGTH,
-  CELL_HEIGHT: 960 / UNIVERSE_HEIGHT
+  CELL_LENGTH: 256 * window.innerWidth/1920 / UNIVERSE_LENGTH,
+  CELL_HEIGHT: 960 * window.innerWidth/1920 / UNIVERSE_HEIGHT
 
-}
+};
 
 var canvas = document.getElementById('universe');
+
 var ctx = canvas.getContext('2d');
+
+ctx.canvas.width  = 256 * window.innerWidth/1920;
+ ctx.canvas.height = 960 * window.innerWidth/1920;
 
 var games = [new Game({
     // enhanced object literals
