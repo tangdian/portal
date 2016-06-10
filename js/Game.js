@@ -180,13 +180,13 @@ class Game {
       for (var i = 0; i < this.itss.length; i++) {
         let x = this.itss[i].GridX;
         let y = this.itss[i].GridY;
-        ctx.drawImage(star2Img, x * xshift, y * yshift,70*this.RATIO, 36*this.RATIO);
+        ctx.drawImage(star2Img, x * xshift, y * yshift,40*this.RATIO, 40*this.RATIO);
       }
 
       for (var i = 0; i < this.itrs.length; i++) {
         let x = this.itrs[i].GridX;
         let y = this.itrs[i].GridY;
-        ctx.drawImage(revImg, x * xshift, y * yshift, 70*this.RATIO, 36*this.RATIO);
+        ctx.drawImage(revImg, x * xshift, y * yshift, 50*this.RATIO, 50*this.RATIO);
       }
 
 
