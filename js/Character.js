@@ -7,6 +7,7 @@ class Character extends Obj {
     this.currY = this.convertPixel(options).y; //in pixel; Y DECREASES
     this.currX = this.convertPixel(options).x;
     this.options = options;
+    this.direction = 0;
   }
 
   initializeCharacter(ctx) {
@@ -29,7 +30,17 @@ class Character extends Obj {
   }
   move() {
     var dy = -2;
-    this.currY += dy;
+    if (this.direction == 0) {
+      this.currY += dy;
+    }
+    else {
+      this.currY -= dy;
+    }
+
+  }
+  reverse() {
+  if (this.direction == 0) this.direction = 1;
+  else this.direction = 0;
   }
 
   draw(ctx) {

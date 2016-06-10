@@ -234,9 +234,10 @@ class Game {
             else {
               var newLoc = convertPixel(this.portalsB[i - 1]);
             }
-            
             this.character.currX = newLoc.x;
+            if (this.character.direction == 0)
             this.character.currY = newLoc.y - 11;
+            else this.character.currY = newLoc.y + 11;
           }
         }
       }
@@ -252,17 +253,16 @@ class Game {
               var newLoc = convertPixel(this.portalsW[i - 1]);
             }
             this.character.currX = newLoc.x;
+            if (this.character.direction == 0)
             this.character.currY = newLoc.y - 11;
+            else this.character.currY = newLoc.y + 11;
           }
         }
       }
 
       for (var i = 0; i < this.stillE.length; i++) {
         var pixel = convertPixel(this.stillE[i]); //in pixel
-        // console.log(pixel.y);
-        // if(this.currY > i.y && this.currY < i.y - 38.4 && (currX > i.x && currX < i.x + 18.28){
          if ((Math.abs(this.character.currY - pixel.y) < 5) && (Math.abs(this.character.currX - pixel.x) < 5)) {
-          // collsionType = "stillE";
           clearInterval(this.moveInterval);
           this.character.rebornCharacter(this.ctx);
           console.log("i am executed");
@@ -271,13 +271,18 @@ class Game {
 
       for (var i = 0; i < this.itss.length; i++) {
         var pixel = convertPixel(this.itss[i]); //in pixel
-        // console.log(pixel.y);
-        // if(this.currY > i.y && this.currY < i.y - 38.4 && (currX > i.x && currX < i.x + 18.28){
         if ((Math.abs(this.character.currY - pixel.y) < 5) && (Math.abs(this.character.currX - pixel.x) < 5)) {
-          // collsionType = "stillE";
           clearInterval(this.moveInterval);
           this.character.rebornCharacter(this.ctx);
           alert("you win!");
+        }
+      }
+
+      for (var i = 0; i < this.itrs.length; i++) {
+        var pixel = convertPixel(this.itrs[i]); //in pixel
+        if ((Math.abs(this.character.currY - pixel.y) < 5) && (Math.abs(this.character.currX - pixel.x) < 5)) {
+          this.character.reverse();
+
         }
       }
 
