@@ -45,7 +45,7 @@ var games = [new Game({
       "xxx ptW kkk",
       "kkk kkk kkk",
       "kkk xxx ptW",
-      "kkk kkk kkk",
+      "its kkk kkk",
       "ptW xxx kkk",
       "kkk kkk kkk",
       "xxx xxx kkk",
